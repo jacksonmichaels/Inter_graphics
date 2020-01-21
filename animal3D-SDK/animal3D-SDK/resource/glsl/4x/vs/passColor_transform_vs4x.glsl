@@ -31,10 +31,19 @@
 //	4) declare varying to pass color input to fragment shader
 //	5) assign vertex color input to varying
 
+//get color and pos to pass/transform
+layout (location = 3) in vec4 aColor;
 layout (location = 0) in vec4 aPosition;
+
+//get mvp for transformatin
+uniform mat4 uMVP;
+
+//set up color as output
+out vec4 vPassColor;
 
 void main()
 {
-	// DUMMY OUTPUT: directly assign input position to output position
-	gl_Position = aPosition;
+	gl_Position = uMVP * aPosition;
+	vPassColor = aColor;
 }
+
