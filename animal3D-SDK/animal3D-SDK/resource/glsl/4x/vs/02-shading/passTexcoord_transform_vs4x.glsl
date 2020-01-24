@@ -35,8 +35,16 @@
 
 layout (location = 0) in vec4 aPosition;
 
+layout (location = 8) in vec4 aTexCoord;
+
+uniform mat4 uAtlas;
+
+uniform mat4 uMVP;
+
+out vec4 aTransformedTexture;
+
 void main()
 {
-	// DUMMY OUTPUT: directly assign input position to output position
-	gl_Position = aPosition;
+	gl_Position = uMVP * aPosition;
+	aTransformedTexture = uAtlas * aTexCoord;
 }
