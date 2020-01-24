@@ -33,6 +33,5 @@ in vec4 vPassColor;
 
 void main()
 {
-	// DUMMY OUTPUT: all fragments are OPAQUE RED
 	rtFragColor = vPassColor;
 }
