@@ -35,3 +35,4 @@ _WORKSPACE/
 *.idea
 *.gradle
 *.tmp
+.vs/
