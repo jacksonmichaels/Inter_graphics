@@ -33,8 +33,42 @@
 
 out vec4 rtFragColor;
 
+in vec4 vVert;
+in vec4 vNormal;
+in vec4 vTransTex;
+
+uniform int uLightCt;
+uniform vec4 uLightPos[4];
+uniform vec4 uLightCol[4];
+uniform vec4 uTex;
+uniform sampler2D uSample;
+
+vec4 getColorForLight(int lightIndex, float ambientLight, float specularCoef)
+{
+	vec3 pos = uLightPos[lightIndex].xyz;
+	vec4 col = uLightCol[lightIndex];
+
+	vec3 normNormal = normalize(vNormal.xyz);
+	vec3 normLightVect = normalize(pos - vVert.xyz);
+
+	vec4 diffusedColor = dot(normNormal, normLightVect) * col;
+
+	vec3 reflective = pow(dot(normNormal, normLightVect), specularCoef) * col.xyz;
+
+	return vec4(reflective,1.0);
+
+	return diffusedColor + vec4(reflective,1.0) + vec4(ambientLight);
+}
+
 void main()
 {
 	// DUMMY OUTPUT: all fragments are OPAQUE GREEN
-	rtFragColor = vec4(0.0, 1.0, 0.0, 1.0);
+	// DUMMY OUTPUT: all fragments are OPAQUE RED
+	//
+	rtFragColor = vec4(0.0);
+	for (int i = 0; i < 4; i++){
+		rtFragColor += getColorForLight(i, 0, 100);
+	}
+
+	rtFragColor *= texture2D(uSample, vec2( vTransTex));
 }

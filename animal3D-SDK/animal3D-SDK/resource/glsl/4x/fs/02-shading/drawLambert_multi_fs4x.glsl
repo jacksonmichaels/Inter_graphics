@@ -40,7 +40,6 @@ in vec4 vTransTex;
 uniform int uLightCt;
 uniform vec4 uLightPos[4];
 uniform vec4 uLightCol[4];
-
 uniform vec4 uTex;
 uniform sampler2D uSample;
 
@@ -54,7 +53,6 @@ vec4 getColorForLight(int lightIndex)
 
 	float result = dot(normNormal, normLightVect);
 	return result * col;
-
 }
 
 void main()
@@ -65,5 +63,6 @@ void main()
 	for (int i = 0; i < 4; i++){
 		rtFragColor += getColorForLight(i);
 	}
+
 	rtFragColor *= texture2D(uSample, vec2( vTransTex));
 }
