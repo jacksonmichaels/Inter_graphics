@@ -43,7 +43,7 @@ uniform vec4 uLightCol[4];
 uniform vec4 uTex;
 uniform sampler2D uSample;
 
-vec4 getColorForLight(int lightIndex, float ambientLight, float specularCoef, float specularShine)
+vec4 getColorForLight(int lightIndex, float ambientLight, float specularCoef, float specularBrightness)
 {
 	vec3 pos = uLightPos[lightIndex].xyz;
 	vec4 col = uLightCol[lightIndex];
@@ -58,14 +58,11 @@ vec4 getColorForLight(int lightIndex, float ambientLight, float specularCoef, fl
 
 	vec4 reflective = pow( max(dot(normalPosition, reflectedRay),0), specularCoef) * col;
 
-	return diffusedColor + reflective * specularShine + vec4(ambientLight);
+	return diffusedColor + reflective * specularBrightness + vec4(ambientLight);
 }
 
 void main()
 {
-	// DUMMY OUTPUT: all fragments are OPAQUE GREEN
-	// DUMMY OUTPUT: all fragments are OPAQUE RED
-	//
 	rtFragColor = vec4(0.0);
 	for (int i = 0; i < 4; i++){
 		rtFragColor += getColorForLight(i, 0.05, 16, 5);
