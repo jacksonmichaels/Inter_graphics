@@ -50,8 +50,6 @@ uniform mat4 uMV;
 uniform mat4 uP;
 uniform mat4 uMV_nrm;
 uniform mat4 uAtlas;
-uniform mat4 uMVP;
-
 
 void main()
 {
