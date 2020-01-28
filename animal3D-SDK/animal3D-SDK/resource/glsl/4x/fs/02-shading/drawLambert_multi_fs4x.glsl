@@ -47,7 +47,7 @@ uniform sampler2D uSample;
 vec4 getColorForLight(int lightIndex)
 {
 
-	// the position and color of the indexed light.
+	// The position and color of the indexed light.
 	vec3 pos = uLightPos[lightIndex].xyz;
 	vec4 col = uLightCol[lightIndex];
 
@@ -64,10 +64,10 @@ vec4 getColorForLight(int lightIndex)
 
 	// By taking the dot product of the vertex's normals and the direction
 	// of light, we can find the light's intensity.
-	float result = dot(normNormal, normLightVect);
+	float diffusedColor = dot(normNormal, normLightVect);
 
 	// Finally, get the real color by multiplying the intensity by the color value.
-	return result * col;
+	return diffusedColor * col;
 }
 
 void main()
