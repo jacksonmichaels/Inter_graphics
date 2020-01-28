@@ -33,8 +33,12 @@
 
 out vec4 rtFragColor;
 
+in vec4 viewSpaceVertexOut;
+in vec4 transformedNormal;
+in vec4 aTransformedTexture;
+
 void main()
 {
 	// DUMMY OUTPUT: all fragments are OPAQUE RED
-	rtFragColor = vec4(1.0, 0.0, 0.0, 1.0);
+	rtFragColor = aTransformedTexture;
 }
