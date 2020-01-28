@@ -65,7 +65,7 @@ void main()
 {
 	rtFragColor = vec4(0.0);
 	for (int i = 0; i < 4; i++){
-		rtFragColor += getColorForLight(i, 0.05, 16, 5);
+		rtFragColor += getColorForLight(i, 0.05, 16, 1);
 	}
 
 	rtFragColor *= texture2D(uSample, vec2( vTransTex));
