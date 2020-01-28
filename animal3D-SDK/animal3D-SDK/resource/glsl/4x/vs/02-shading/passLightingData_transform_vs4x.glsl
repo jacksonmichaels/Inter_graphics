@@ -42,9 +42,9 @@ layout (location = 0) in vec4 aPosition;
 layout (location = 2) in vec4 aNorm;
 layout (location = 8) in vec4 aTexCoord;
 
-out vec4 viewSpaceVertexOut;
-out vec4 transformedNormal;
-out vec4 aTransformedTexture;
+out vec4 vVert;
+out vec4 vNormal;
+out vec4 vTransTex;
 
 uniform mat4 uMV;
 uniform mat4 uP;
@@ -55,8 +55,8 @@ uniform mat4 uMVP;
 
 void main()
 {
-	aTransformedTexture = uAtlas * aTexCoord;
-	transformedNormal = uMV_nrm * aNorm;
-	viewSpaceVertexOut = uMV * aPosition;
-	gl_Position = uProj * viewSpaceVertexOut;
+	vTransTex = uAtlas * aTexCoord;
+	vNormal = uMV_nrm * aNorm;
+	vVert = uMV * aPosition;
+	gl_Position = uP * vVert;
 }

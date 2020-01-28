@@ -33,12 +33,26 @@
 
 out vec4 rtFragColor;
 
-in vec4 viewSpaceVertexOut;
-in vec4 transformedNormal;
-in vec4 aTransformedTexture;
+in vec4 vVert;
+in vec4 vNormal;
+in vec4 vTransTex;
+
+uniform int uLightCt;
+uniform vec4 uLightPos[4];
+uniform vec4 uLightCol[4];
+
+
+vec4 getColorForLight(int lightIndex)
+{
+	vec4 pos = uLightPos[lightIndex];
+	vec4 col = uLightCol[lightIndex];
+
+
+	return col;
+}
 
 void main()
 {
 	// DUMMY OUTPUT: all fragments are OPAQUE RED
-	rtFragColor = aTransformedTexture;
+	rtFragColor = vNormal;
 }
