@@ -51,7 +51,6 @@ uniform mat4 uP;
 uniform mat4 uMV_nrm;
 uniform mat4 uAtlas;
 
-
 void main()
 {
 	vTransTex = uAtlas * aTexCoord;
