@@ -50,14 +50,17 @@ vec4 getColorForLight(int lightIndex, float ambientLight, float specularCoef)
 
 	vec3 normNormal = normalize(vNormal.xyz);
 	vec3 normLightVect = normalize(pos - vVert.xyz);
+	vec3 normalPosition = normalize(vVert.xyz);
 
 	vec4 diffusedColor = dot(normNormal, normLightVect) * col;
 
-	vec3 reflective = pow(dot(normNormal, normLightVect), specularCoef) * col.xyz;
+	vec3 reflectedRay = reflect(normLightVect, normNormal);
 
-	return vec4(reflective,1.0);
+	vec4 reflective = pow(dot(normalPosition, reflectedRay), specularCoef) * col;
 
-	return diffusedColor + vec4(reflective,1.0) + vec4(ambientLight);
+	return reflective;
+
+	//return diffusedColor + reflective + vec4(ambientLight);
 }
 
 void main()
@@ -67,7 +70,7 @@ void main()
 	//
 	rtFragColor = vec4(0.0);
 	for (int i = 0; i < 4; i++){
-		rtFragColor += getColorForLight(i, 0, 100);
+		rtFragColor += getColorForLight(i, 0.05, 16);
 	}
 
 	rtFragColor *= texture2D(uSample, vec2( vTransTex));
