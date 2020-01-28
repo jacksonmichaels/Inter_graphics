@@ -41,18 +41,24 @@ uniform int uLightCt;
 uniform vec4 uLightPos[4];
 uniform vec4 uLightCol[4];
 
+uniform vec4 uTex;
+uniform sampler2D uSample;
 
 vec4 getColorForLight(int lightIndex)
 {
-	vec4 pos = uLightPos[lightIndex];
+	vec3 pos = uLightPos[lightIndex].xyz;
 	vec4 col = uLightCol[lightIndex];
 
+	vec3 normNormal = normalize(vNormal.xyz);
+	vec3 normLightVect = normalize(vVert.xyz - pos);
 
-	return col;
+	float result = dot(normNormal, normLightVect);
+	return col * max(result, 0.0);
+
 }
 
 void main()
 {
 	// DUMMY OUTPUT: all fragments are OPAQUE RED
-	rtFragColor = vNormal;
+	rtFragColor = getColorForLight(0);
 }
