@@ -50,15 +50,20 @@ vec4 getColorForLight(int lightIndex)
 	vec4 col = uLightCol[lightIndex];
 
 	vec3 normNormal = normalize(vNormal.xyz);
-	vec3 normLightVect = normalize(vVert.xyz - pos);
+	vec3 normLightVect = normalize(pos - vVert.xyz);
 
 	float result = dot(normNormal, normLightVect);
-	return col * max(result, 0.0);
+	return result * col;
 
 }
 
 void main()
 {
 	// DUMMY OUTPUT: all fragments are OPAQUE RED
-	rtFragColor = getColorForLight(0);
+	//
+	rtFragColor = vec4(0.0);
+	for (int i = 0; i < 4; i++){
+		rtFragColor += getColorForLight(i);
+	}
+	rtFragColor *= texture2D(uSample, vec2( vTransTex));
 }
