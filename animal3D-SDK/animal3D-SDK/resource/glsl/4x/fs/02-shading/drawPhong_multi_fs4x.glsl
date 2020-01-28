@@ -43,7 +43,7 @@ uniform vec4 uLightCol[4];
 uniform vec4 uTex;
 uniform sampler2D uSample;
 
-vec4 getColorForLight(int lightIndex, float ambientLight, float specularCoef)
+vec4 getColorForLight(int lightIndex, float ambientLight, float specularCoef, float specularShine)
 {
 	vec3 pos = uLightPos[lightIndex].xyz;
 	vec4 col = uLightCol[lightIndex];
@@ -56,11 +56,9 @@ vec4 getColorForLight(int lightIndex, float ambientLight, float specularCoef)
 
 	vec3 reflectedRay = reflect(normLightVect, normNormal);
 
-	vec4 reflective = pow(dot(normalPosition, reflectedRay), specularCoef) * col;
+	vec4 reflective = pow( max(dot(normalPosition, reflectedRay),0), specularCoef) * col;
 
-	return reflective;
-
-	//return diffusedColor + reflective + vec4(ambientLight);
+	return diffusedColor + reflective * specularShine + vec4(ambientLight);
 }
 
 void main()
@@ -70,7 +68,7 @@ void main()
 	//
 	rtFragColor = vec4(0.0);
 	for (int i = 0; i < 4; i++){
-		rtFragColor += getColorForLight(i, 0.05, 16);
+		rtFragColor += getColorForLight(i, 0.05, 16, 5);
 	}
 
 	rtFragColor *= texture2D(uSample, vec2( vTransTex));
