@@ -416,13 +416,13 @@ void a3demo_render_main(const a3_DemoState *demoState,
 
 	// ****TO-DO: 
 	//	-> 2.1g: framebuffer for display
-	/*
+	
 	// framebuffers from which to read based on pipeline mode
 	const a3_Framebuffer* readFBO[] = {
 		0,
 		demoState->fbo_scene,
 	};
-	*/
+	
 
 	// tmp lighting data
 	a3f32 lightSz[demoStateMaxCount_lightObject];
@@ -471,11 +471,11 @@ void a3demo_render_main(const a3_DemoState *demoState,
 	case demoStateSubMode_main_mrt:
 		// ****TO-DO: 
 		//	-> 2.1h: activate framebuffer
-		/*
+		
 		// target scene framebuffer
 		currentWriteFBO = demoState->fbo_scene;
 		a3framebufferActivate(currentWriteFBO);
-		*/
+		
 
 		// clear now, handle skybox later
 		glDisable(GL_STENCIL_TEST);
