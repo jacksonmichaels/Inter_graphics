@@ -39,9 +39,22 @@
 //		how to handle the texture coordinate
 
 layout (location = 0) in vec4 aPosition;
+layout (location = 2) in vec4 aNorm;
+layout (location = 8) in vec4 aTexCoord;
+
+out vec4 vVert;
+out vec4 vNormal;
+out vec4 vTransTex;
+
+uniform mat4 uMV;
+uniform mat4 uP;
+uniform mat4 uMV_nrm;
+uniform mat4 uAtlas;
 
 void main()
 {
-	// DUMMY OUTPUT: directly assign input position to output position
-	gl_Position = aPosition;
+	vTransTex = uAtlas * aTexCoord;
+	vNormal = uMV_nrm * aNorm;
+	vVert = uMV * aPosition;
+	gl_Position = uP * vVert;
 }

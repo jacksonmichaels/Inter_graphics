@@ -46,4 +46,3 @@ void main()
 	// DUMMY OUTPUT: directly assign input position to output position
 	gl_Position = uMVP * aPosition;
 	vTexcoord = vec2(uAtlas * aTexcoord);
-}

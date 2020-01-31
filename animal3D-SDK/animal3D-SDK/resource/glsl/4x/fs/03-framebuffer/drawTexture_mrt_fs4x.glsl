@@ -49,5 +49,5 @@ void main()
 	rtFragColor = sample_dm;
 
 	//lab 3
+	// Blue component is blank, alpha is opaque
 	rtTexCoord = vec4(vTexCoord, 0.0, 1.0);
-}

@@ -33,8 +33,52 @@
 
 out vec4 rtFragColor;
 
+in vec4 vVert;
+in vec4 vNormal;
+in vec4 vTransTex;
+
+uniform int uLightCt;
+uniform vec4 uLightPos[4];
+uniform vec4 uLightCol[4];
+uniform vec4 uTex;
+uniform sampler2D uSample;
+
+// Given the index of a light, get the color value for that light.
+vec4 getColorForLight(int lightIndex)
+{
+
+	// The position and color of the indexed light.
+	vec3 pos = uLightPos[lightIndex].xyz;
+	vec4 col = uLightCol[lightIndex];
+
+	// By normalizing the normals, we prepair it for
+	// the dot product function.
+	vec3 normNormal = normalize(vNormal.xyz);
+
+	// By subtracting the light's position from the position of the vertex,
+	// we are given the vector direction that the light is traveling.
+	vec3 lightVec = pos - vVert.xyz;
+
+	// Normalizing the light's direction will prepair it for the dot product.
+	vec3 normLightVect = normalize(lightVec);
+
+	// By taking the dot product of the vertex's normals and the direction
+	// of light, we can find the light's intensity.
+	float diffusedColor = dot(normNormal, normLightVect);
+
+	// Finally, get the real color by multiplying the intensity by the color value.
+	return diffusedColor * col;
+}
+
 void main()
 {
-	// DUMMY OUTPUT: all fragments are OPAQUE RED
-	rtFragColor = vec4(1.0, 0.0, 0.0, 1.0);
+	rtFragColor = vec4(0.0);
+
+	// For each light, get the color of fragment and add them together.
+	for (int i = 0; i < 4; i++){
+		rtFragColor += getColorForLight(i);
+	}
+
+	// Apply the color we recieve from the lights, and apply it to the given texture.
+	rtFragColor *= texture2D(uSample, vec2( vTransTex));
 }
