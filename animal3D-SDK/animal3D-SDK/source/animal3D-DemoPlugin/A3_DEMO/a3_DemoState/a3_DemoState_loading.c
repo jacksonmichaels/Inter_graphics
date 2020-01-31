@@ -785,7 +785,7 @@ void a3demo_loadFramebuffers(a3_DemoState* demoState)
 
 	// ****TO-DO: 
 	//	-> 2.1c: framebuffer initialization
-	/*
+	
 	// create framebuffers and change their texture settings if need be
 	a3_Framebuffer* fbo;
 	a3ui32 i, j;
@@ -821,7 +821,7 @@ void a3demo_loadFramebuffers(a3_DemoState* demoState)
 			a3textureChangeFilterMode(a3tex_filterLinear);
 		}
 	}
-	*/
+	
 
 
 	// deactivate texture
