@@ -32,16 +32,25 @@
 //	5) assign modified sample to output color
 
 uniform vec4 uTex;
-uniform int uTime;
+uniform double uTime;
 
 in vec2 vTexcoord;
 uniform sampler2D uSample;
 
 out vec4 rtFragColor;
 
+vec4 modifySample(vec4 inputTexture)
+{
+	float sinFloatTime = abs(sin(float(uTime)));
+
+	vec4 modulatingRedAndGreen = vec4(1.0 - sinFloatTime, sinFloatTime, 0.0, 1.0);
+
+	return (inputTexture * modulatingRedAndGreen);
+}
+
 void main()
 {
-	vec4 newColor = vec4(1.0) - texture2D(uSample, vTexcoord);
-	newColor.a = 1;
-	rtFragColor = newColor;
+	vec4 inputTexture = texture2D(uSample, sin(vTexcoord));
+
+	rtFragColor = modifySample(inputTexture);
 }
