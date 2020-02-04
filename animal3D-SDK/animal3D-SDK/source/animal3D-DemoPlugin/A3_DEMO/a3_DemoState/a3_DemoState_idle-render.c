@@ -57,17 +57,17 @@ inline void a3demo_enableCompositeBlending()
 // default stencil state for writing
 inline void a3demo_enableStencilWrite()
 {
-//	glStencilFunc(...);			// any stencil value will be set to 1
-//	glStencilOp(...);			// replace stencil value if S&D tests pass
-//	glStencilMask(...);			// write to stencil buffer
+	glStencilFunc(GL_ALWAYS, 1, 1);			// any stencil value will be set to 1
+	glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);			// replace stencil value if S&D tests pass
+	glStencilMask(0xFF);			// write to stencil buffer
 }
 
 // default stencil state for comparing
 inline void a3demo_enableStencilCompare()
 {
-//	glStencilFunc(...);			// stencil test passes if equal to 1
-//	glStencilOp(...);			// keep stencil value if S&D tests pass
-//	glStencilMask(...);			// don't write to stencil buffer
+	glStencilFunc(GL_EQUAL, 1, 1);			// stencil test passes if equal to 1
+	glStencilOp(GL_ZERO, GL_ZERO, GL_KEEP);			// keep stencil value if S&D tests pass
+	glStencilMask(0);			// don't write to stencil buffer
 }
 
 
@@ -509,8 +509,8 @@ void a3demo_render_main(const a3_DemoState *demoState,
 		glClear(GL_STENCIL_BUFFER_BIT);
 
 		// disable drawing this object to color or depth
-	//	glColorMask(...);
-	//	glDepthMask(...);
+		glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
+		glDepthMask(GL_FALSE);
 
 		// inverted small sphere in solid transparent color
 		// used as our "lens" for the depth and stencil tests
@@ -519,8 +519,8 @@ void a3demo_render_main(const a3_DemoState *demoState,
 		glCullFace(GL_BACK);
 
 		// enable drawing following objects to color and depth
-	//	glColorMask(...);
-	//	glDepthMask(...);
+		glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
+		glDepthMask(GL_TRUE);
 
 		// default stencil compare settings
 		a3demo_enableStencilCompare();
