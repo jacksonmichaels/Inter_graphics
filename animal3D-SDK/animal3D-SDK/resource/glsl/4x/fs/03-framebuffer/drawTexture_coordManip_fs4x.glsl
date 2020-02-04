@@ -32,12 +32,26 @@
 //	5) assign sample to output color
 
 uniform vec4 uTex;
-uniform int uTime;
+uniform double uTime;
 
-in vec4 vVert;
+in vec2 vTexcoord;
 uniform sampler2D uSample;
+
+out vec4 rtFragColor;
+
+vec2 modifyTexCoord(vec2 texcoord)
+{
+
+	texcoord.y += 0.1;
+
+	return texcoord;
+}
 
 void main()
 {
-	gl_Position = vVert;
+	
+	vec2 newTexcoord = modifyTexCoord(vTexcoord);
+
+	rtFragColor = texture2D(uSample, newTexcoord);
+
 }

@@ -50,7 +50,7 @@ vec4 modifySample(vec4 inputTexture)
 
 void main()
 {
-	vec4 inputTexture = texture2D(uSample, sin(vTexcoord));
+	vec4 inputTexture = texture2D(uSample, vTexcoord);
 
 	rtFragColor = modifySample(inputTexture);
 }
