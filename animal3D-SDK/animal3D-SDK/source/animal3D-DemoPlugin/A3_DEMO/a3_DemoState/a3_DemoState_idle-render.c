@@ -515,7 +515,7 @@ void a3demo_render_main(const a3_DemoState *demoState,
 		// inverted small sphere in solid transparent color
 		// used as our "lens" for the depth and stencil tests
 		glCullFace(GL_FRONT);
-		a3vertexDrawableActivateAndRender(demoState->draw_sphere);
+		a3vertexDrawableActivateAndRender(demoState->draw_torus);
 		glCullFace(GL_BACK);
 
 		// enable drawing following objects to color and depth
