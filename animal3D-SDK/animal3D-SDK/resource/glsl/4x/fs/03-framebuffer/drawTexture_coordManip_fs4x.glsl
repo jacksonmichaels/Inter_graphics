@@ -42,9 +42,18 @@ out vec4 rtFragColor;
 vec2 modifyTexCoord(vec2 texcoord)
 {
 
-	texcoord.y += 0.1;
+	// variables for the wavey effect
+	float amplitude = 0.1;
+	float angularFrequency = 10.0;
+	float phase = 0;
+	float sinFloatTime = sin(float(uTime));
 
-	return texcoord;
+	vec2 wavyTexcoord;
+
+	wavyTexcoord.y = texcoord.y;
+	wavyTexcoord.x = texcoord.x + amplitude * sin((angularFrequency * texcoord.y * sinFloatTime) + phase);
+
+	return wavyTexcoord;
 }
 
 void main()

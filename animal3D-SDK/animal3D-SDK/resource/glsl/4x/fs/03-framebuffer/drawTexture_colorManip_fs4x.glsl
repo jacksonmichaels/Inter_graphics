@@ -41,9 +41,9 @@ out vec4 rtFragColor;
 
 vec4 modifySample(vec4 inputTexture)
 {
-	float sinFloatTime = abs(sin(float(uTime)));
+	float absSinFloatTime = abs(sin(float(uTime)));
 
-	vec4 modulatingRedAndGreen = vec4(1.0 - sinFloatTime, sinFloatTime, 0.0, 1.0);
+	vec4 modulatingRedAndGreen = vec4(1.0 - absSinFloatTime, absSinFloatTime, 0.0, 1.0);
 
 	return (inputTexture * modulatingRedAndGreen);
 }
