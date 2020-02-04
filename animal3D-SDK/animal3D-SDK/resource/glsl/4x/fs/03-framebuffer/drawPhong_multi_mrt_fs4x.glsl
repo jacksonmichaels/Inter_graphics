@@ -132,8 +132,11 @@ void main()
 		specular += getSpecular(normNormal, normPosition, i, 16, 1);
 	}
 	rtFragColor += diffuse + specular + ambient;
+
 	// Apply the color we recieve from the lights, and apply it to the given texture.
 	vec4 texColor = texture2D(uSample, vec2(vTransTex));
+
+	// Declaring new render targets for each applicable output.
 	rtViewPos = vVert;
 	rtViewNormal = vec4(normNormal, 1);
 	rtTexCoord = vTransTex;

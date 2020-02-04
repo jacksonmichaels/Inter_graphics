@@ -41,10 +41,18 @@ out vec4 rtFragColor;
 
 vec4 modifySample(vec4 inputTexture)
 {
+
+	// We are taking the absolute value of the sin of float time
+	// in order to avoid negative color values. A float conversion
+	// is necessary since uTime starts out as a double, which we
+	// cannot use in a vec4.
 	float absSinFloatTime = abs(sin(float(uTime)));
 
+	// This is the new color filter to use,
+	// which uses a modulating green and inverse modulating red.
 	vec4 modulatingRedAndGreen = vec4(1.0 - absSinFloatTime, absSinFloatTime, 0.0, 1.0);
 
+	// Applies the filter to the sample, returning it.
 	return (inputTexture * modulatingRedAndGreen);
 }
 
@@ -52,5 +60,6 @@ void main()
 {
 	vec4 inputTexture = texture2D(uSample, vTexcoord);
 
+	// Returns a modified sample of the input texture.
 	rtFragColor = modifySample(inputTexture);
 }
