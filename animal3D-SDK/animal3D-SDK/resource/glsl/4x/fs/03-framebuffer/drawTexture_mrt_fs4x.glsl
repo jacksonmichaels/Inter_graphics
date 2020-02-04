@@ -45,9 +45,10 @@ layout (location = 3) out vec4 rtTexCoord;
 void main()
 {
 	//lab 2
-	vec4 sample_dm = texture(uTex_dm, vTexcoord);
+	vec4 sample_dm = texture(uTex_dm, vTexcoord	);
 	rtFragColor = sample_dm;
 
 	//lab 3
 	// Blue component is blank, alpha is opaque
-	rtTexCoord = vec4(vTexCoord, 0.0, 1.0);
+	rtTexCoord = vec4(vTexcoord, 0.0, 1.0);
+}

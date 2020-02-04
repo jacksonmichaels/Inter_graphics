@@ -31,10 +31,13 @@
 //	4) sample texture using modified texture coordinate
 //	5) assign sample to output color
 
-out vec4 rtFragColor;
+uniform vec4 uTex;
+uniform int uTime;
+
+in vec4 vVert;
+uniform sampler2D uSample;
 
 void main()
 {
-	// DUMMY OUTPUT: all fragments are OPAQUE DARK GREY
-	rtFragColor = vec4(0.2, 0.2, 0.2, 1.0);
+	gl_Position = vVert;
 }

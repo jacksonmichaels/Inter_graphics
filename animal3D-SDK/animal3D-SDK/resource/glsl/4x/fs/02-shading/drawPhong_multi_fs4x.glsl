@@ -33,12 +33,6 @@
 
 out vec4 rtFragColor;
 
-<<<<<<< HEAD
-void main()
-{
-	// DUMMY OUTPUT: all fragments are OPAQUE GREEN
-	rtFragColor = vec4(0.0, 1.0, 0.0, 1.0);
-=======
 in vec4 vVert;
 in vec4 vNormal;
 in vec4 vTransTex;
@@ -104,5 +98,4 @@ void main()
 
 	// Apply the color we recieve from the lights, and apply it to the given texture.
 	rtFragColor *= texture2D(uSample, vec2( vTransTex));
->>>>>>> ba0570f812eb69be68e10130cfdffff217e973ae
 }

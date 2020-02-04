@@ -30,22 +30,14 @@
 //	3) sample texture using texture coordinate
 //	4) assign sample to output color
 
-<<<<<<< HEAD
-=======
-
 uniform vec4 uTex;
-in vec4 aTransformedTexture;
+in vec2 vTexcoord;
 uniform sampler2D uSample;
 
->>>>>>> ba0570f812eb69be68e10130cfdffff217e973ae
 out vec4 rtFragColor;
 
 void main()
 {
 	// DUMMY OUTPUT: all fragments are OPAQUE WHITE
-<<<<<<< HEAD
-	rtFragColor = vec4(1.0, 1.0, 1.0, 1.0);
-=======
-	rtFragColor = texture2D(uSample, vec2( aTransformedTexture));
->>>>>>> ba0570f812eb69be68e10130cfdffff217e973ae
+	rtFragColor = texture2D(uSample, vTexcoord);
 }
