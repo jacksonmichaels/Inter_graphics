@@ -644,7 +644,6 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 		// activate program
 		currentDemoProg = demoState->shaderProgram + i;
 		a3shaderProgramActivate(currentDemoProg->program);
-
 		// common VS
 		a3demo_setUniformDefaultMat4(currentDemoProg, uMVP);
 		a3demo_setUniformDefaultMat4(currentDemoProg, uMV);
