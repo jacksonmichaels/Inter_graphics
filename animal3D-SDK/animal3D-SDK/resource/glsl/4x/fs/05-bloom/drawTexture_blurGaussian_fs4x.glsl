@@ -34,6 +34,53 @@ uniform sampler2D uImage00;
 
 layout (location = 0) out vec4 rtFragColor;
 
+
+vec4 blurGaussian0(in sampler2D img, in vec2 center, int vec2 dir)
+{
+	return texture(img, center);
+}
+
+vec4 blurGaussian1(in sampler2D img, in vec2 center, int vec2 dir)
+{
+	vec4 c = vec4(0.0);
+	c += texture(img, center - dir/2);
+	c += texture(img, center + dir/2);
+	return c / 2;
+}
+
+vec4 blurGaussian2(in sampler2D img, in vec2 center, int vec2 dir)
+{
+	vec4 c = vec4(0.0);
+	c += texture(img, center) * 2;
+	c += texture(img, center - dir);
+	c += texture(img, center + dir);
+	return c / 4;
+}
+
+vec4 blurGaussian4(in sampler2D img, in vec2 center, int vec2 dir)
+{
+	vec4 c = vec4(0.0);
+	c += texture(img, center - dir * 2);
+	c += texture(img, center - dir) * 4;
+	c += texture(img, center) * 6;
+	c += texture(img, center + dir) * 4;
+	c += texture(img, center + dir * 2);
+	return c / 16;
+}
+
+vec4 blurGaussian6(in sampler2D img, in vec2 center, int vec2 dir)
+{
+	vec4 c = vec4(0.0);
+	c += texture(img, center - dir * 3);
+	c += texture(img, center - dir * 2) * 6;
+	c += texture(img, center - dir) * 15;
+	c += texture(img, center) * 20;
+	c += texture(img, center + dir) * 15;
+	c += texture(img, center + dir * 2) * 6;
+	c += texture(img, center + dir * 3);
+	return c / 64;
+}
+
 void main()
 {
 	// DUMMY OUTPUT: all fragments are OPAQUE MAGENTA
