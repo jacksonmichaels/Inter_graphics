@@ -39,7 +39,7 @@ layout(location = 8) in vec4 aTexCoord;
 out vec4 vVert;
 out vec4 vNormal;
 out vec4 vTransTex;
-out vec4 vShadowCoord
+out vec4 vShadowCoord;
 
 uniform mat4 uMV;
 uniform mat4 uP;
