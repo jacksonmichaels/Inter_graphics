@@ -52,6 +52,6 @@ void main()
 	vTransTex = uAtlas * aTexCoord;
 	vNormal = uMV_nrm * aNorm;
 	vVert = uMV * aPosition;
+	vShadowCoord = uMVPB * aPosition;
 	gl_Position = uP * vVert;
-	vShadowCoord = uMVPB * vVert;
 }
