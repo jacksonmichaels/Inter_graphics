@@ -66,7 +66,7 @@ bool getShadowTest()
 	return isShadow;
 }
 
-vec4 getDiffuse(int lightIndex, vec3 normNormal)
+vec4 getDiffuse(int lightIndex, vec3 normNormal, bool shadowed)
 {
 	// The position and color of the indexed light.
 	vec3 pos = uLightPos[lightIndex].xyz;
@@ -90,8 +90,6 @@ vec4 getDiffuse(int lightIndex, vec3 normNormal)
 
 	diffusedColor.a = 1;
 
-	bool shadowed = getShadowTest();
-
 	if (shadowed)
 	{
 		diffusedColor *= 0.0025;
@@ -102,7 +100,7 @@ vec4 getDiffuse(int lightIndex, vec3 normNormal)
 }
 
 
-vec4 getSpecular(vec3 normNormal, vec3 normalPosition, int lightIndex, float specularCoef, float specularBrightness)
+vec4 getSpecular(vec3 normNormal, vec3 normalPosition, int lightIndex, float specularCoef, float specularBrightness, bool shadowed)
 {
 	// The position and color of the indexed light.
 	vec3 pos = uLightPos[lightIndex].xyz;
@@ -132,8 +130,15 @@ vec4 getSpecular(vec3 normNormal, vec3 normalPosition, int lightIndex, float spe
 
 	vec4 finalColor = reflective * specularBrightness;
 
+	if (shadowed)
+	{
+		finalColor *= 0.5;
+	}
+
+
 	finalColor.a = 1;
 
+	
 	// We take the reflectiveness mutliplied by the specular brightness (an optional parameter to change brightness),
 	// and add it with the light's intensity and the general brightness of the scene (abient light).
 	return finalColor;
@@ -148,12 +153,12 @@ void main()
 	vec4 ambient = vec4(0);
 	vec3 normPosition = normalize(vVert.xyz);
 
-	bool shaded = getShadowTest();
+	bool shadowed = getShadowTest();
 
 	// For each light, get the color of fragment and add them together.
 	for (int i = 0; i < 4; i++) {
-		diffuse += getDiffuse(i, normNormal);
-		specular += getSpecular(normNormal, normPosition, i, 16, 1);
+		diffuse += getDiffuse(i, normNormal, shadowed);
+		specular += getSpecular(normNormal, normPosition, i, 16, 1, shadowed);
 	}
 	rtFragColor += diffuse + specular + ambient;
 
