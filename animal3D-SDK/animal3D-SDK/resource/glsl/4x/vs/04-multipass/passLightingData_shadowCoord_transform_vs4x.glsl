@@ -45,13 +45,13 @@ uniform mat4 uMV;
 uniform mat4 uP;
 uniform mat4 uMV_nrm;
 uniform mat4 uAtlas;
-uniform mat4 uMVPB;
+uniform mat4 uMVPB_other;
 
 void main()
 {
 	vTransTex = uAtlas * aTexCoord;
 	vNormal = uMV_nrm * aNorm;
 	vVert = uMV * aPosition;
-	vShadowCoord = uMVPB * aPosition;
+	vShadowCoord = uMVPB_other * aPosition;
 	gl_Position = uP * vVert;
 }

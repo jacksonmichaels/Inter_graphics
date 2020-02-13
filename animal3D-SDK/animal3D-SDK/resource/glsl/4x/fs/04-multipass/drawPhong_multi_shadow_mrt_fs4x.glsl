@@ -58,7 +58,8 @@ bool getShadowTest()
 	vec4 shadowPerspect = vShadowCoord / vShadowCoord.w;
 	vec4 col = texture2D(uTex_shadow, vec2(shadowPerspect));
 	float perspDist = col.r;
-	bool isShadow = (perspDist < vShadowCoord.z);
+	bool isShadow = (perspDist + 0.0025< vShadowCoord.z);
+
 	return isShadow;
 }
 
@@ -90,11 +91,10 @@ vec4 getDiffuse(int lightIndex, vec3 normNormal)
 
 	if (shadowed)
 	{
-		return vec4(0, 0, 0, 1);
+		diffusedColor *= 0.0025;
 	}
-	else {
-		return diffusedColor;
-	}
+	return diffusedColor;
+	
 
 }
 
@@ -166,5 +166,5 @@ void main()
 	rtDiffuseTotal = diffuse;
 	rtSpecularTotal = specular;
 	rtFragColor *= texColor;
-	//rtFragColor = vShadowCoord;
+	//rtFragColor = vVert;
 }
