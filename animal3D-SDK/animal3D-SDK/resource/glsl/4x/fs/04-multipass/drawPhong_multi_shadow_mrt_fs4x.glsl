@@ -51,14 +51,14 @@ uniform vec4 uLightPos[4];
 uniform vec4 uLightCol[4];
 uniform vec4 uTex;
 uniform sampler2D uSample;
-uniform sampler2D shadowMap;
+uniform sampler2D uTex_shadow;
 
 bool getShadowTest()
 {
 	vec4 shadowPerspect = vShadowCoord / vShadowCoord.w;
-	vec4 col = texture2D(shadowMap, vec2(shadowPerspect));
+	vec4 col = texture2D(uTex_shadow, vec2(shadowPerspect));
 	float perspDist = col.r;
-	bool isShadow = (perspDist > vShadowCoord.z);
+	bool isShadow = (perspDist < vShadowCoord.z);
 	return isShadow;
 }
 
@@ -166,4 +166,5 @@ void main()
 	rtDiffuseTotal = diffuse;
 	rtSpecularTotal = specular;
 	rtFragColor *= texColor;
+	//rtFragColor = vShadowCoord;
 }
