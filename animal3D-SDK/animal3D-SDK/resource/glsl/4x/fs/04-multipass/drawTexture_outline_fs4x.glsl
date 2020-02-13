@@ -53,7 +53,7 @@ void main()
 
 	float testColor = sample_dm.b;
 
-	float threshhold = testColor - 0.01;
+	float threshhold = testColor - 0.005;
 
 	if (texture2D(uTex_sm, vec2(texturePos.x + offset, texturePos.y)).b  < threshhold ||
 	texture2D(uTex_sm, vec2(texturePos.x, texturePos.y - offset)).b  < threshhold ||
