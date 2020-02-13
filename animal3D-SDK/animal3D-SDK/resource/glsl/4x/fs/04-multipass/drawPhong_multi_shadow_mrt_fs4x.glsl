@@ -56,8 +56,11 @@ uniform sampler2D uTex_shadow;
 bool getShadowTest()
 {
 	vec4 shadowPerspect = vShadowCoord / vShadowCoord.w;
+
 	vec4 col = texture2D(uTex_shadow, vec2(shadowPerspect));
+
 	float perspDist = col.r;
+
 	bool isShadow = (perspDist + 0.0025< vShadowCoord.z);
 
 	return isShadow;
