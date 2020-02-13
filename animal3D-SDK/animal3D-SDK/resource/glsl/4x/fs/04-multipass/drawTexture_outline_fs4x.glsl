@@ -32,6 +32,7 @@ in vec4 passTexcoord;
 
 uniform sampler2D uTex_dm;
 uniform sampler2D uTex_sm;
+uniform sampler2D uTex_nm;
 
 
 //lab 2
@@ -43,11 +44,28 @@ layout (location = 3) out vec4 rtTexCoord;
 
 void main()
 {
-	//lab 2
-	vec4 sample_dm = texture(uTex_sm, vec2(passTexcoord));
-	rtFragColor = sample_dm;
+	
+	float offset = 1.0 / 128.0;
+	vec2 texturePos = vec2(passTexcoord);
+	vec4 sample_dm = texture2D(uTex_sm, texturePos);
+	vec4 finalColor = sample_dm;
+
+	if (sample_dm.r >= 0.5)
+	{
+		float alpha = texture2D(uTex_sm, vec2(texturePos.x + offset, texturePos.y)).a +
+		texture2D(uTex_sm, vec2(texturePos.x, texturePos.y - offset)).a +
+		texture2D(uTex_sm, vec2(texturePos.x - offset, texturePos.y)).a +
+		texture2D(uTex_sm, vec2(texturePos.x, texturePos.y + offset)).a;
+		if (sample_dm.r < 1.0 && alpha > 0.0)
+		{
+			finalColor = vec4(0.0, 0.0, 0.0, 1.0);
+		}
+	}
+
+
+	rtFragColor = finalColor;
 
 	//lab 3
 	// Blue component is blank, alpha is opaque
-	rtTexCoord = vec4(passTexcoord);
+	rtTexCoord = passTexcoord;
 }
