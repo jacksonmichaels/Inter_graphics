@@ -48,19 +48,21 @@ void main()
 	float offset = 1.0 / 128.0;
 	vec2 texturePos = vec2(passTexcoord);
 	vec4 sample_dm = texture2D(uTex_sm, texturePos);
-	vec4 finalColor = sample_dm;
+	vec4 sample_real = texture2D(uTex_dm, texturePos);
+	vec4 finalColor = sample_real;
 
-	if (sample_dm.r >= 0.5)
+	float testColor = sample_dm.b;
+
+	float threshhold = testColor - 0.01;
+
+	if (texture2D(uTex_sm, vec2(texturePos.x + offset, texturePos.y)).b  < threshhold ||
+	texture2D(uTex_sm, vec2(texturePos.x, texturePos.y - offset)).b  < threshhold ||
+	texture2D(uTex_sm, vec2(texturePos.x - offset, texturePos.y)).b  < threshhold ||
+	texture2D(uTex_sm, vec2(texturePos.x, texturePos.y + offset)).b  < threshhold)
 	{
-		float alpha = texture2D(uTex_sm, vec2(texturePos.x + offset, texturePos.y)).a +
-		texture2D(uTex_sm, vec2(texturePos.x, texturePos.y - offset)).a +
-		texture2D(uTex_sm, vec2(texturePos.x - offset, texturePos.y)).a +
-		texture2D(uTex_sm, vec2(texturePos.x, texturePos.y + offset)).a;
-		if (sample_dm.r < 1.0 && alpha > 0.0)
-		{
-			finalColor = vec4(0.0, 0.0, 0.0, 1.0);
-		}
+		finalColor = vec4(0.0, 0.0, 0.0, 1.0);
 	}
+	
 
 
 	rtFragColor = finalColor;
