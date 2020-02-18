@@ -872,6 +872,7 @@ void a3demo_loadFramebuffers(a3_DemoState* demoState)
 		// ****TO-DO: 
 		//	-> 2.1c: set up half-size framebuffers
 		
+		//4.1b
 		//	-> post-processing, color only
 		fbo = demoState->fbo_post_c16_2fr + i;
 		a3framebufferCreate(fbo, "fbo:post-process",

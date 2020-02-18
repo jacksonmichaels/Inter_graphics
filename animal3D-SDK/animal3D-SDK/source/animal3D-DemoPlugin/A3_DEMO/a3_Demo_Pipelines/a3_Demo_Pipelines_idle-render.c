@@ -532,8 +532,6 @@ void a3pipelines_render(a3_DemoState const* demoState, a3_Demo_Pipelines const* 
 	currentPass = pipelines_passBright_2;
 	currentWriteFBO = writeFBO[currentPass];
 	currentReadFBO = readFBO[currentPass][0];
-	
-
 	a3framebufferActivate(currentWriteFBO);
 	a3framebufferBindColorTexture(currentReadFBO, a3tex_unit00, 0);
 	a3vertexDrawableRenderActive();
@@ -584,6 +582,10 @@ void a3pipelines_render(a3_DemoState const* demoState, a3_Demo_Pipelines const* 
 	//		-> 1) activate frameuffer for writing
 	//		-> 2) bind first color texture from framebuffer used in previous pass
 	//		-> 3) draw full-screen quad (already active)
+
+	currentDemoProgram = demoState->prog_drawTexture_brightPass;
+	a3shaderProgramActivate(currentDemoProgram->program);
+
 
 	currentPass = pipelines_passBright_4;
 	currentWriteFBO = writeFBO[currentPass];
@@ -640,6 +642,10 @@ void a3pipelines_render(a3_DemoState const* demoState, a3_Demo_Pipelines const* 
 	//		-> 1) activate frameuffer for writing
 	//		-> 2) bind first color texture from framebuffer used in previous pass
 	//		-> 3) draw full-screen quad (already active)
+
+	currentDemoProgram = demoState->prog_drawTexture_brightPass;
+	a3shaderProgramActivate(currentDemoProgram->program);
+
 
 	currentPass = pipelines_passBright_8;
 	currentWriteFBO = writeFBO[currentPass];
