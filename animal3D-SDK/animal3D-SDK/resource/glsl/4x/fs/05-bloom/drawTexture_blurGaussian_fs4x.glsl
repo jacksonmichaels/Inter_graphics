@@ -96,5 +96,5 @@ void main()
 
 	// DUMMY OUTPUT: all fragments are OPAQUE MAGENTA
 	//vec2(uAxis.x * uSize.x, uAxis.y * uSize.y)
-	rtFragColor = blurGaussian1(uImage00, vec2(passTexcoord), vec2(uAxis.x * uSize.x, uAxis.y * uSize.y));
+	rtFragColor = blurGaussian6(uImage00, vec2(passTexcoord), vec2(uAxis.x * uSize.x, uAxis.y * uSize.y));
 }
