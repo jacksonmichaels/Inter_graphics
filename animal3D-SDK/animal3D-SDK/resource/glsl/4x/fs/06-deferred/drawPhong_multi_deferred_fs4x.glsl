@@ -28,9 +28,10 @@
 #define MAX_LIGHTS 4
 
 // ****TO-DO: 
+// My Note: Copy origonal phong, take the whole thing, and replace any avarying inputs we recieved from previous vertex shader with a texture sample
 //	0) copy original forward Phong shader
 //	1) declare g-buffer textures as uniform samplers
-//	2) declare light data as uniform block
+//	2) declare light data as block
 //	3) replace geometric information normally received from fragment shader 
 //		with samples from respective g-buffer textures; use to compute lighting
 //			-> position calculated using reverse perspective divide; requires 
