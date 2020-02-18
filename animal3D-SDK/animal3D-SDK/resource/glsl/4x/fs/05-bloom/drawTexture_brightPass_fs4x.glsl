@@ -45,7 +45,6 @@ float relativeLuminance(vec4 c)
 
 void main()
 {
-	// DUMMY OUTPUT: all fragments are OPAQUE CYAN
 	vec4 pix = texture2D(uSample, passTexcoord.xy);
 	rtLuminance = pix * relativeLuminance(pix);
 	rtFragColor = rtLuminance;
