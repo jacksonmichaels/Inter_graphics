@@ -49,7 +49,7 @@ float blendColor(float base, float blend)
 }
 
 // Blends two images together, by collecting the results
-// Of a blend of each of their pixel values.
+// Of a blend of each of their color values.
 vec4 blendScreen(vec4 base, vec4 blend)
 {
 	return vec4(blendColor(base.r, blend.r), blendColor(base.g, blend.g), blendColor(base.b, blend.b), 1.0);
