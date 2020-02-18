@@ -31,19 +31,23 @@
 //	3) sample texture using Gaussian blur function and output result
 
 uniform sampler2D uImage00;
-uniform vec4 uAxis;
-uniform vec4 uSize;
+uniform vec2 uAxis;
+uniform vec2 uSize;
+
+in vec4 passTexcoord;
+in float samplingFBOwidth;
+in float samplingFBOheight;
 
 
 layout (location = 0) out vec4 rtFragColor;
 
 
-vec4 blurGaussian0(in sampler2D img, in vec2 center, int vec2 dir)
+vec4 blurGaussian0(in sampler2D img, in vec2 center, in vec2 dir)
 {
 	return texture(img, center);
 }
 
-vec4 blurGaussian1(in sampler2D img, in vec2 center, int vec2 dir)
+vec4 blurGaussian1(in sampler2D img, in vec2 center, in vec2 dir)
 {
 	vec4 c = vec4(0.0);
 	c += texture(img, center - dir/2);
@@ -51,7 +55,7 @@ vec4 blurGaussian1(in sampler2D img, in vec2 center, int vec2 dir)
 	return c / 2;
 }
 
-vec4 blurGaussian2(in sampler2D img, in vec2 center, int vec2 dir)
+vec4 blurGaussian2(in sampler2D img, in vec2 center, in vec2 dir)
 {
 	vec4 c = vec4(0.0);
 	c += texture(img, center) * 2;
@@ -60,7 +64,7 @@ vec4 blurGaussian2(in sampler2D img, in vec2 center, int vec2 dir)
 	return c / 4;
 }
 
-vec4 blurGaussian4(in sampler2D img, in vec2 center, int vec2 dir)
+vec4 blurGaussian4(in sampler2D img, in vec2 center, in vec2 dir)
 {
 	vec4 c = vec4(0.0);
 	c += texture(img, center - dir * 2);
@@ -71,7 +75,7 @@ vec4 blurGaussian4(in sampler2D img, in vec2 center, int vec2 dir)
 	return c / 16;
 }
 
-vec4 blurGaussian6(in sampler2D img, in vec2 center, int vec2 dir)
+vec4 blurGaussian6(in sampler2D img, in vec2 center, in vec2 dir)
 {
 	vec4 c = vec4(0.0);
 	c += texture(img, center - dir * 3);
@@ -86,9 +90,10 @@ vec4 blurGaussian6(in sampler2D img, in vec2 center, int vec2 dir)
 
 void main()
 {
-	float pixelwidth = 1 / samplingFBOwidth
-	float pixelheight = 1 / samplingFBOheight
+	//float pixelwidth = 1 / samplingFBOwidth;
+	//float pixelheight = 1 / samplingFBOheight;
 
 	// DUMMY OUTPUT: all fragments are OPAQUE MAGENTA
-	rtFragColor = blurGaussian4(uImage00, vTexcoord, )
+	//vec2(uAxis.x * uSize.x, uAxis.y * uSize.y)
+	rtFragColor = blurGaussian4(uImage00, vec2(passTexcoord), vec2(uAxis.x * uSize.x, uAxis.y * uSize.y));
 }
