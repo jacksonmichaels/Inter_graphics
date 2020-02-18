@@ -674,6 +674,16 @@ void a3pipelines_render(a3_DemoState const* demoState, a3_Demo_Pipelines const* 
 	a3shaderUniformSendFloat(a3unif_vec2, currentDemoProgram->uAxis, 1, a3vec2_x.v);
 	a3vertexDrawableRenderActive();
 
+	currentPass = pipelines_passBlurV_8;
+	currentWriteFBO = writeFBO[currentPass];
+	currentReadFBO = readFBO[currentPass][0];
+
+	a3framebufferActivate(currentWriteFBO);
+	a3framebufferBindColorTexture(currentReadFBO, a3tex_unit00, 0);
+	a3shaderUniformSendFloat(a3unif_vec2, currentDemoProgram->uAxis, 1, a3vec2_y.v);
+	a3vertexDrawableRenderActive();
+
+
 
 	// bloom composite
 	currentDemoProgram = demoState->prog_drawTexture_blendScreen4;
