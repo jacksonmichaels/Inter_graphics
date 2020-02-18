@@ -40,15 +40,36 @@ uniform sampler2D uImage03;
 
 layout (location = 0) out vec4 rtFragColor;
 
+// Blends individual colors together.
+// Takes the inverse of the base color, multiplied by the inverse of the second color,
+// and takes the inverse of that result.
+float blendColor(float base, float blend) 
+{
+	return 1.0 - ((1.0 - base) * (1.0 - blend));
+}
+
+// Blends two images together, by collecting the results
+// Of a blend of each of their pixel values.
+vec4 blendScreen(vec4 base, vec4 blend)
+{
+	return vec4(blendColor(base.r, blend.r), blendColor(base.g, blend.g), blendColor(base.b, blend.b), 1.0);
+}
+
 
 void main()
 {
-	//origonal image
-	rtFragColor = texture2D( uImage00, vec2(passTexcoord));
-	//first pass
-	rtFragColor += texture2D(uImage01, vec2(passTexcoord));
-	//second pass
-	rtFragColor += texture2D(uImage02, vec2(passTexcoord));
-	//third and final pass
-	rtFragColor += texture2D(uImage03, vec2(passTexcoord));
+
+	// Collecting each of the images
+	vec4 firstImage = texture2D( uImage00, vec2(passTexcoord));
+	vec4 secondImage = texture2D(uImage01, vec2(passTexcoord));
+	vec4 thirdImage = texture2D(uImage02, vec2(passTexcoord));
+	vec4 fourthImage = texture2D(uImage03, vec2(passTexcoord));
+
+	// Need three passes total, using the result of the previous
+	// pass as the base input to the next. This creates a chain of blending.
+	vec4 firstPass = blendScreen(firstImage, secondImage);
+	vec4 secondPass = blendScreen(firstPass, thirdImage);
+	vec4 thirdPass = blendScreen(secondPass, fourthImage);
+
+	rtFragColor = thirdPass;
 }
