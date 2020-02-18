@@ -878,13 +878,13 @@ void a3demo_loadFramebuffers(a3_DemoState* demoState)
 			targets_composite, colorType_composite, a3fbo_depthDisable,
 			frameWidth2, frameHeight2);
 
-
-		a3framebufferCreate(fbo, "fbo:post-process",
+		fbo = demoState->fbo_post_c16_4fr + i;
+		a3framebufferCreate(fbo, "fbo:post-process2",
 			targets_composite, colorType_composite, a3fbo_depthDisable,
 			frameWidth4, frameHeight4);
 
 		fbo = demoState->fbo_post_c16_8fr + i;
-		a3framebufferCreate(fbo, "fbo:post-process",
+		a3framebufferCreate(fbo, "fbo:post-process3",
 			targets_composite, colorType_composite, a3fbo_depthDisable,
 			frameWidth8, frameHeight8);		
 	}

@@ -282,9 +282,11 @@ void a3pipelines_render(a3_DemoState const* demoState, a3_Demo_Pipelines const* 
 
 		{ demoState->fbo_post_c16_2fr + 0, 0, },
 		{ demoState->fbo_post_c16_2fr + 1, 0, },
+		{ demoState->fbo_post_c16_2fr + 2, 0, },
 
 		{ demoState->fbo_post_c16_4fr + 0, 0, },
 		{ demoState->fbo_post_c16_4fr + 1, 0, },
+		{ demoState->fbo_post_c16_4fr + 2, 0, },
 
 		{ demoState->fbo_post_c16_8fr + 0, 0, },
 		{ demoState->fbo_post_c16_8fr + 1, 0, },
@@ -664,77 +666,6 @@ void a3pipelines_render(a3_DemoState const* demoState, a3_Demo_Pipelines const* 
 
 
 	currentPass = pipelines_passBlurH_8;
-	currentWriteFBO = writeFBO[currentPass];
-	currentReadFBO = readFBO[currentPass][0];
-
-	a3framebufferActivate(currentWriteFBO);
-	a3framebufferBindColorTexture(currentReadFBO, a3tex_unit00, 0);
-	a3shaderUniformSendFloat(a3unif_vec2, currentDemoProgram->uAxis, 1, a3vec2_x.v);
-	a3vertexDrawableRenderActive();
-
-
-	// ****TO-DO: 
-	//	-> 3.1c: repeat previous pass but using vertical axis
-	sampleAxisV = a3vec2_y;	// delete this line; variable is already initialized
-
-	currentPass = pipelines_passBlurV_8;
-	currentWriteFBO = writeFBO[currentPass];
-	currentReadFBO = readFBO[currentPass][0];
-
-	a3framebufferActivate(currentWriteFBO);
-	a3framebufferBindColorTexture(currentReadFBO, a3tex_unit00, 0);
-	a3shaderUniformSendFloat(a3unif_vec2, currentDemoProgram->uAxis, 1, a3vec2_y.v);
-	a3vertexDrawableRenderActive();
-
-	//////////////////////////////////////////
-
-	currentPass = pipelines_passBright_4;
-	currentWriteFBO = writeFBO[currentPass];
-	currentReadFBO = readFBO[currentPass][0];
-
-	a3framebufferActivate(currentWriteFBO);
-	a3framebufferBindColorTexture(currentReadFBO, a3tex_unit00, 0);
-	a3shaderUniformSendFloat(a3unif_vec2, currentDemoProgram->uAxis, 1, a3vec2_x.v);
-	a3vertexDrawableRenderActive();
-
-	currentPass = pipelines_passBlurH_4;
-	currentWriteFBO = writeFBO[currentPass];
-	currentReadFBO = readFBO[currentPass][0];
-
-	a3framebufferActivate(currentWriteFBO);
-	a3framebufferBindColorTexture(currentReadFBO, a3tex_unit00, 0);
-	a3shaderUniformSendFloat(a3unif_vec2, currentDemoProgram->uAxis, 1, a3vec2_x.v);
-	a3vertexDrawableRenderActive();
-
-	currentPass = pipelines_passBlurV_4;
-	currentWriteFBO = writeFBO[currentPass];
-	currentReadFBO = readFBO[currentPass][0];
-
-	a3framebufferActivate(currentWriteFBO);
-	a3framebufferBindColorTexture(currentReadFBO, a3tex_unit00, 0);
-	a3shaderUniformSendFloat(a3unif_vec2, currentDemoProgram->uAxis, 1, a3vec2_x.v);
-	a3vertexDrawableRenderActive();
-
-
-	currentPass = pipelines_passBright_8;
-	currentWriteFBO = writeFBO[currentPass];
-	currentReadFBO = readFBO[currentPass][0];
-
-	a3framebufferActivate(currentWriteFBO);
-	a3framebufferBindColorTexture(currentReadFBO, a3tex_unit00, 0);
-	a3shaderUniformSendFloat(a3unif_vec2, currentDemoProgram->uAxis, 1, a3vec2_x.v);
-	a3vertexDrawableRenderActive();
-
-	currentPass = pipelines_passBlurH_8;
-	currentWriteFBO = writeFBO[currentPass];
-	currentReadFBO = readFBO[currentPass][0];
-
-	a3framebufferActivate(currentWriteFBO);
-	a3framebufferBindColorTexture(currentReadFBO, a3tex_unit00, 0);
-	a3shaderUniformSendFloat(a3unif_vec2, currentDemoProgram->uAxis, 1, a3vec2_x.v);
-	a3vertexDrawableRenderActive();
-
-	currentPass = pipelines_passBlurV_8;
 	currentWriteFBO = writeFBO[currentPass];
 	currentReadFBO = readFBO[currentPass][0];
 
