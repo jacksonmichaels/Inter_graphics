@@ -638,13 +638,11 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 
 	// ****TO-DO: 
 	//	-> 4.1a: setup screen blending program
-	/*
 	// texturing with bloom composition
 	currentDemoProg = demoState->prog_drawTexture_blendScreen4;
 	a3shaderProgramCreate(currentDemoProg->program, "prog:draw-tex-blend4");
 	a3shaderProgramAttachShader(currentDemoProg->program, shaderList.passTexcoord_transform_vs->shader);
 	a3shaderProgramAttachShader(currentDemoProg->program, shaderList.drawTexture_blendScreen4_fs->shader);
-	*/
 
 
 	// activate a primitive for validation
@@ -876,24 +874,24 @@ void a3demo_loadFramebuffers(a3_DemoState* demoState)
 		
 		//	-> post-processing, color only
 		fbo = demoState->fbo_post_c16_2fr + i;
-		//3 lines of unsure
 		a3framebufferCreate(fbo, "fbo:post-process",
 			targets_composite, colorType_composite, a3fbo_depthDisable,
-			frameWidth1/2, frameHeight1/2);
+			frameWidth1 / 2, frameHeight1 / 2);
 
 		
 		// ****TO-DO: 
 		//	-> 4.1b: set up smaller framebuffers
-		/*
+		
 		fbo = demoState->fbo_post_c16_4fr + i;
-		???
-		???
-		???
+		a3framebufferCreate(fbo, "fbo:post-process2",
+			targets_composite, colorType_composite, a3fbo_depthDisable,
+			frameWidth4, frameHeight1 / 4);
+
 		fbo = demoState->fbo_post_c16_8fr + i;
-		???
-		???
-		???
-		*/
+		a3framebufferCreate(fbo, "fbo:post-process3",
+			targets_composite, colorType_composite, a3fbo_depthDisable,
+			frameWidth4, frameHeight1 / 8);
+		
 	}
 
 
