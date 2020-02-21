@@ -68,7 +68,7 @@ void main()
 	// Need three passes total, using the result of the previous
 	// pass as the base input to the next. This creates a chain of blending.
 	vec4 firstPass = blendScreen(firstImage, secondImage);
-	vec4 secondPass = blendScreen(firstPass, thirdImage);
+	vec4 secondPass = blendScreen(secondImage, thirdImage);
 	vec4 thirdPass = blendScreen(secondPass, fourthImage);
 
 	rtFragColor = thirdPass;
