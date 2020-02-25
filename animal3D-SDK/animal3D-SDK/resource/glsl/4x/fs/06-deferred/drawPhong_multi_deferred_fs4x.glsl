@@ -141,11 +141,8 @@ void main()
 {
 	unTransformData();
 	vec3 normNormal = normalize(vNormal.xyz);
-	vec4 ambient = vec4(0.5);
+	vec4 ambient = vec4(0.0);
 	vec3 normPosition = normalize(vVert.xyz);
-	
-
-
 
 	// For each light, get the color of fragment and add them together.
 	vec4 diffuse = getDiffuse(normNormal);

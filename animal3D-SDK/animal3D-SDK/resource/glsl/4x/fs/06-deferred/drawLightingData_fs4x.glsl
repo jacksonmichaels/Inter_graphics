@@ -49,7 +49,6 @@ vec4 bufferPack(vec4 input)
 
 void main()
 {
-	// DUMMY OUTPUT: all fragments are OPAQUE RED, GREEN AND BLUE
 	rtViewPosition = vBiasedClipCoord / vBiasedClipCoord.w;
 	// to un-do we want to flip the matrix transform
 	// view_pos = inverse_proj_bias * biasClibCoord
