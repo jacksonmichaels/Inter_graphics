@@ -47,6 +47,8 @@ uniform sampler2D uImage01; //position attributes
 uniform sampler2D uImage02; //normal attributes
 uniform sampler2D uImage03; //texCoord attributes
 
+uniform sampler2D uTex_dm_ramp;
+
 vec4 vVert;
 vec4 vNormal;
 vec4 vTransTex;
@@ -57,6 +59,7 @@ uniform vec4 uLightCol;
 uniform vec4 uTex;
 uniform sampler2D uSample;
 uniform mat4 uPB_inv;
+
 
 vec4 getDiffuse(vec3 normNormal)
 {
@@ -151,7 +154,7 @@ void main()
 	rtFragColor = diffuse + specular + ambient;
 
 	// Apply the color we recieve from the lights, and apply it to the given texture.
-	vec4 texColor = texture2D(uSample, vec2(vTransTex));
+	vec4 texColor = texture2D(uTex_dm_ramp, vec2(vTransTex));
 
 	// Declaring new render targets for each applicable output.
 	rtFragColor *= texColor;
