@@ -53,19 +53,20 @@ vec4 vVert;
 vec4 vNormal;
 vec4 vTransTex;
 
+
 uniform int uLightCt;
-uniform vec4 uLightPos;
-uniform vec4 uLightCol;
+uniform vec4 uLightPos[4];
+uniform vec4 uLightCol[4];
 uniform vec4 uTex;
 uniform sampler2D uSample;
 uniform mat4 uPB_inv;
 
 
-vec4 getDiffuse(vec3 normNormal)
+vec4 getDiffuse(vec3 normNormal, int lightIndex)
 {
 	// The position and color of the indexed light.
-	vec3 pos = uLightPos.xyz;
-	vec4 col = uLightCol;
+	vec3 pos = uLightPos[lightIndex].xyz;
+	vec4 col = uLightCol[lightIndex];
 
 	// By subtracting the light's position from the position of the vertex,
 	// we are given the vector direction that the light is traveling.
@@ -89,11 +90,11 @@ vec4 getDiffuse(vec3 normNormal)
 }
 
 
-vec4 getSpecular(vec3 normNormal, vec3 normalPosition, float specularCoef, float specularBrightness)
+vec4 getSpecular(vec3 normNormal, vec3 normalPosition, float specularCoef, float specularBrightness, int lightIndex)
 {
 	// The position and color of the indexed light.
-	vec3 pos = uLightPos.xyz;
-	vec4 col = uLightCol;
+	vec3 pos = uLightPos[lightIndex].xyz;
+	vec4 col = uLightCol[lightIndex];
 
 
 	// By subtracting the light's position from the position of the vertex,
@@ -144,12 +145,19 @@ void main()
 {
 	unTransformData();
 	vec3 normNormal = normalize(vNormal.xyz);
-	vec4 ambient = vec4(0.0);
+	vec4 ambient = vec4(0.0, 0.0, 0.0, 1);
 	vec3 normPosition = normalize(vVert.xyz);
 
 	// For each light, get the color of fragment and add them together.
-	vec4 diffuse = getDiffuse(normNormal);
-	vec4 specular = getSpecular(normNormal, normPosition, 16, 1);
+	vec4 diffuse = vec4(0);
+	vec4 specular = vec4(0);
+
+	for (int i = 0; i < uLightCt; i++)
+	{
+		diffuse += getDiffuse(normNormal, i);
+		specular += getSpecular(normNormal, normPosition, 16, 1, i);
+	}
+	
 
 	rtFragColor = diffuse + specular + ambient;
 
