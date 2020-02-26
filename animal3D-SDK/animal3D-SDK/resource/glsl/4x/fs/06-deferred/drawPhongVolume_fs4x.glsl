@@ -75,29 +75,31 @@ uniform mat4 uPB_inv;
 
 // (0)
 
-vec4 getDiffuse(vec3 normNormal, vec4 uLightPos, vec4 uLightCol)
+vec4 getDiffuse(vec3 normNormal, vec4 lightPos, vec4 lightCol)
 {
 	// The position and color of the indexed light.
-	vec3 pos = uLightPos.xyz;
-	vec4 col = uLightCol;
+	vec3 pos = lightPos.xyz;
+	vec4 col = lightCol;
+	vec4 diffusedColor;
 
 	// By subtracting the light's position from the position of the vertex,
 	// we are given the vector direction that the light is traveling.
 	vec3 lightVec = pos - vVert.xyz;
 
-	// Normalizing the light's direction will prepair it for the dot product,
-	// and to be reflected.
-	vec3 normLightVect = normalize(lightVec);
 
-	// Since the Phong shader needs to know the camera's position,
-	// we need to add the normalized vertex position.
-	vec3 normalPosition = normalize(vVert.xyz);
+		// Normalizing the light's direction will prepair it for the dot product,
+		// and to be reflected.
+		vec3 normLightVect = normalize(lightVec);
 
-	// By taking the dot product of the vertex's normals and the direction
-	// of light, we can find the light's intensity.
-	vec4 diffusedColor = dot(normNormal, normLightVect) * col;
+		// Since the Phong shader needs to know the camera's position,
+		// we need to add the normalized vertex position.
+		vec3 normalPosition = normalize(vVert.xyz);
 
-	diffusedColor.a = 1;
+		// By taking the dot product of the vertex's normals and the direction
+		// of light, we can find the light's intensity.
+		diffusedColor = dot(normNormal, normLightVect) * col;
+
+		diffusedColor.a = 1;
 
 	return diffusedColor;
 }
@@ -109,31 +111,35 @@ vec4 getSpecular(vec3 normNormal, vec3 normalPosition, float specularCoef, float
 	vec3 pos = uLightPos.xyz;
 	vec4 col = uLightCol;
 
+	vec4 finalColor;
+
 
 	// By subtracting the light's position from the position of the vertex,
 	// we are given the vector direction that the light is traveling.
 	vec3 lightVec = pos - vVert.xyz;
 
-	// Normalizing the light's direction will prepair it for the dot product,
-	// and to be reflected.
-	vec3 normLightVect = normalize(lightVec);
 
-	// The normalized light vector is reflected over the normalized vertex position,
-	// In order to compute if we should show a bright spot at the location.
-	vec3 reflectedRay = reflect(normLightVect, normNormal);
 
-	// We take the dot product of the normalized position and the reflected ray,
-	// in order to compute how well the two vectors line up with eachother.
-	// We take the max of this result and 0, to avoid the scene rendering completely dark;
-	// aka the specular reflection is never negative.
-	// We then take that result to the power of the specular coefficient, or 'shininess',
-	// in order to compute how large the reflected spot is.
-	// Finally, we multiply this result by the light's color to get the final color value.
-	vec4 reflective = pow(max(dot(normalPosition, reflectedRay), 0), specularCoef) * col;
+		// Normalizing the light's direction will prepair it for the dot product,
+		// and to be reflected.
+		vec3 normLightVect = normalize(lightVec);
 
-	vec4 finalColor = reflective * specularBrightness;
+		// The normalized light vector is reflected over the normalized vertex position,
+		// In order to compute if we should show a bright spot at the location.
+		vec3 reflectedRay = reflect(normLightVect, normNormal);
 
-	finalColor.a = 1;
+		// We take the dot product of the normalized position and the reflected ray,
+		// in order to compute how well the two vectors line up with eachother.
+		// We take the max of this result and 0, to avoid the scene rendering completely dark;
+		// aka the specular reflection is never negative.
+		// We then take that result to the power of the specular coefficient, or 'shininess',
+		// in order to compute how large the reflected spot is.
+		// Finally, we multiply this result by the light's color to get the final color value.
+		vec4 reflective = pow(max(dot(normalPosition, reflectedRay), 0), specularCoef) * col;
+
+		finalColor = reflective * specularBrightness;
+
+		finalColor.a = 1;
 
 	// We take the reflectiveness mutliplied by the specular brightness (an optional parameter to change brightness),
 	// and add it with the light's intensity and the general brightness of the scene (abient light).
@@ -143,7 +149,7 @@ vec4 getSpecular(vec3 normNormal, vec3 normalPosition, float specularCoef, float
 
 void unTransformData()
 {
-	vec2 position = vec2(0, 0); // Here we do persepective divide
+	vec2 position = (vBiasedClipCoord / vBiasedClipCoord.w).xy; // Here we do persepective divide
 
 	vVert = texture2D(uImage01, position);
 	vNormal = texture2D(uImage02, position);
@@ -157,7 +163,13 @@ void unTransformData()
 
 void main()
 {
-	// DUMMY OUTPUT: all fragments are OPAQUE MAGENTA
-	rtDiffuseLight = vec4(1.0, 0.0, 1.0, 1.0);
-	rtSpecularLight = vec4(1.0, 0.0, 1.0, 1.0);
+	sPointLight light = uLight[vInstanceID];
+	unTransformData();
+	vec3 normNormal = normalize(vNormal.xyz);
+	vec3 normPosition = normalize(vVert.xyz);
+
+	// For each light, get the color of fragment and add them together.
+	rtDiffuseLight = getDiffuse(normNormal, light.worldPos, light.color);
+	//rtDiffuseLight = vec4(vNormal.xyz, 1.0);
+	rtSpecularLight = getSpecular(normNormal, normPosition, 16, 1, light.worldPos, light.color);
 }
