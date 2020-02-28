@@ -53,6 +53,6 @@ void main()
 	// to un-do we want to flip the matrix transform
 	// view_pos = inverse_proj_bias * biasClibCoord
 	// view_pos = view_pos / view_pos.w
-	rtViewNormal = bufferPack(vViewNormal);
+	rtViewNormal = bufferPack(normalize(vViewNormal));
 	rtAtlasTexcoord = vTexcoord;
 }

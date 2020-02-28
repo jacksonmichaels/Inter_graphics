@@ -139,8 +139,8 @@ vec4 getSpecular(vec3 normNormal, vec3 normalPosition, float specularCoef, float
 
 		finalColor = reflective * specularBrightness;
 
-		finalColor.a = 1;
-
+//		finalColor.a = 0;
+//
 	// We take the reflectiveness mutliplied by the specular brightness (an optional parameter to change brightness),
 	// and add it with the light's intensity and the general brightness of the scene (abient light).
 	return finalColor;
