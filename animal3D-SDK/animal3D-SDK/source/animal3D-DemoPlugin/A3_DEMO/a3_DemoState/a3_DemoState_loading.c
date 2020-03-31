@@ -422,6 +422,7 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 			// 02-shading
 			a3_DemoStateShader
 				passTexcoord_transform_vs[1],
+				passBlackHole_transform_vs[1],
 				passLightingData_transform_vs[1];
 
 			// fragment shaders
@@ -459,6 +460,7 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 			{ { { 0 },	"shdr-vs:pass-col-trans-inst",		a3shader_vertex  ,	1,{ A3_DEMO_VS"e/passColor_transform_instanced_vs4x.glsl" } } },
 			// 02-shading
 			{ { { 0 },	"shdr-vs:pass-tex-trans",			a3shader_vertex  ,	1,{ A3_DEMO_VS"02-shading/passTexcoord_transform_vs4x.glsl" } } },
+			{ { { 0 },	"shdr-vs:pass-blackhole-trans",			a3shader_vertex  ,	1,{ A3_DEMO_VS"02-shading/passBlackHole_transform_vs4x.glsl" } } },
 			{ { { 0 },	"shdr-vs:pass-light-trans",			a3shader_vertex  ,	1,{ A3_DEMO_VS"02-shading/passLightingData_transform_vs4x.glsl" } } },
 
 			// fs
@@ -581,7 +583,7 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 	// texturing with color manipulation
 	currentDemoProg = demoState->prog_drawTexture_colorManip;
 	a3shaderProgramCreate(currentDemoProg->program, "prog:draw-tex-colormanip");
-	a3shaderProgramAttachShader(currentDemoProg->program, shaderList.passTexcoord_transform_vs->shader);
+	a3shaderProgramAttachShader(currentDemoProg->program, shaderList.passBlackHole_transform_vs->shader);
 	a3shaderProgramAttachShader(currentDemoProg->program, shaderList.drawTexture_colorManip_fs->shader);
 	// texturing with texcoord manipulation
 	currentDemoProg = demoState->prog_drawTexture_coordManip;
