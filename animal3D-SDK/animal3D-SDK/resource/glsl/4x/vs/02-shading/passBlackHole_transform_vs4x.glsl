@@ -44,13 +44,13 @@ float getOrbitCoord(float coord)
 	float orbitSpeed = 1.0;
 
 	// The depth that the new orbit will travel to.
-	float orbitalDepth = 1.0;
+	float orbitalDepth = 10.0;
 
 	// The final orbital coordinate to be offset with the original coordinate.
-	float orbitalCoordinate =  orbitalDepth * floatTime * orbitSpeed;
+	float orbitalCoordinate = floatTime * orbitSpeed;
 
 	// The final offset to be combined with the original coordinate.
-	float orbitOffset = sin(coord + orbitalCoordinate);
+	float orbitOffset = sin(coord * orbitalDepth + orbitalCoordinate);
 
 	// Return the offset coordinate.
 	return coord + (coord * orbitOffset);
