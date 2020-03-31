@@ -1,6 +1,9 @@
 # Intermediate Graphics Midterm, Black Hole Simulation
 ## Overview
 
+## Overview Video
+![https://youtu.be/Rzda0JmUzTU](https://youtu.be/Rzda0JmUzTU)
+
 ## Team members contributions
 ### Jackson
 Black Hole fragment shader implementation 
