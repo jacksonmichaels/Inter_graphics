@@ -38,8 +38,10 @@ layout (location = 8) in vec4 aTexCoord;
 
 uniform mat4 uMVP;
 uniform mat4 uAtlas;
+uniform float uTime;
 
 out vec2 vTexcoord;
+
 
 void main()
 {

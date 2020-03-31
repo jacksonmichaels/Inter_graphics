@@ -73,12 +73,14 @@ void main()
 	float brightnessMax = 1.0;
 	float postWarpPosition = distanceToCenter / (warpRadius * schwarzschildRadius);
 
+	float olda = rtFragColor.a;
+
 	// The actual black hole warping effect:
 	// 1. Mixes together the sharpness, brightness, and the fragment's position after warping
 	// 2. Take the minimum of that value and a max brightness value, to prevent the fragments outside
 	//    of the black hole from being too bright.
-	rtFragColor *= min(mix(blackHoleSharpness, brightness, postWarpPosition), brightnessMax);
-
+	float blackHoleDarkness = min(mix(blackHoleSharpness, brightness, postWarpPosition), brightnessMax);
+	rtFragColor *= blackHoleDarkness;
+	rtFragColor.a+= 1 - blackHoleDarkness;
 	// Makes the black hole within the schwarzschild radius appear opaque.
-	rtFragColor.a = 1;
 }
