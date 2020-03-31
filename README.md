@@ -1,18 +1,23 @@
 # Intermediate Graphics Midterm, Black Hole Simulation
 ## Overview
-For our midterm project, we created a black hole fragment shader, and an orbiting vertex shader.
+For our midterm project, we created a black hole fragment shader and an orbiting vertex shader.
 To access this project, navigate to the "Color manipulation" forward display mode located in the Shading with MRT Sub-mode.
 
 ### Fragment Shader
-This effect, using a post processing pass, takes the UV coordinates of each fragment and warps them towards the black hole.
+This effect, using a post-processing pass, takes the UV coordinates of each fragment and warps them towards the black hole.
 This creates an effect where the earth (and the objects around it) seem to be bending in towards the black hole. 
 This allows the user to see what they would not normally be able to see behind the black hole, as the fragments are being bent around it.
+There are four main configurable parameters: 
+blackHoleSharpness, which controls the blur effect around the black hole, 
+brightness, 
+schwarzschildRadius,
+and brightnessMax, which prevents the rest of the scene's colors from going over 1.0.
 
 ### Vertex Shader
 The vertex shader is a custom build one, named passBlackHole_transform_vs4x.glsl located in 4x/vs/02-shading.
-The shader has a two main configurable parameters: 
+The shader has two main configurable parameters: 
 orbital speed, which controls the speed at which the orbit happens,
-and orbital deptch, which controls the depth at which the orbit will travel.
+and orbital depth, which controls the depth at which the orbit will travel.
 To change between this vertex shader and the default one, 
 simply change passBlackHole_transform_vs under the prog_drawTexture_colorManip program (located in a3_DemoState_loading.c) to passTexcoord_transform_vs.
 
@@ -31,10 +36,10 @@ Vertex Shader implementation and integration with fragment shader
 Refactored fragment shader for increased readability
 
 ## Description
-This project uses fragment and vertex shaders to simulate the light warping effects observed neaby a black hole. The basic effect is to take the fragments that are close to the center of the black hole and shift them outwards to make the illusion that light from objects behind the Black Hole is being bent around the edges to the observers eye.
+This project uses fragment and vertex shaders to simulate the light warping effects observed nearby a black hole. The basic effect is to take the fragments that are close to the center of the black hole and shift them outwards to make the illusion that light from objects behind the Black Hole is being bent around the edges to the observers eye.
 
 ## Justification
-Our project fits into the intermediate real-time effect category. This is because it is an intermediate level post processing effect, which uses techniques that build on principals we have learned to date, such as UV remapping and vector distances.
+Our project fits into the intermediate real-time effect category. This is because it is an intermediate level post-processing effect, which uses techniques that build on principals we have learned to date, such as UV remapping and vector distances.
 
 
 ## UML
