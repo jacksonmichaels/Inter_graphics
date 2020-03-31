@@ -47,7 +47,9 @@ and definitions for uDem and uCenter, which are two uniforms used in the fragmen
 
 ### Fragment
 4x/vs/03-framebuffer/drawTexture_colorManip_fs4x.glsl: The black hole fragment shader.
+
 a3_DemoShaderProgram.h: Contains definitions for uDem and uCenter.
+
 a3_DemoState_idle-render.c: Passes uDem and uCenter to the shader.
 
 ### Vertex
