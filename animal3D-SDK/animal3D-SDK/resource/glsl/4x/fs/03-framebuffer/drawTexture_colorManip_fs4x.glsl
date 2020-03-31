@@ -32,6 +32,8 @@
 //	5) assign modified sample to output color
 
 uniform vec4 uTex;
+uniform vec2 uCenter;
+uniform float uDem;
 uniform double uTime;
 
 in vec2 vTexcoord;
@@ -58,8 +60,29 @@ vec4 modifySample(vec4 inputTexture)
 
 void main()
 {
-	vec4 inputTexture = texture2D(uSample, vTexcoord);
+
+	// Normalized pixel coordinates (from 0 to 1)
+	vec2 uv = vTexcoord;
+	vec2 center = uCenter;
+	float rad = 0.1;
+	//float aspect = iResolution.x / iResolution.y;
+
+	vec2 dir = center - uv;
+	dir.x *= uDem;
+	float len = length(dir);
+	vec2 new_dir = normalize(dir) * rad;
+	vec2 new_uv = uv + new_dir * rad / len;
+
+
+
+	rtFragColor = texture2D(uSample, new_uv);
+	float olda = rtFragColor.a;
+
+	rtFragColor *= min(mix(-15.0, 1.0, len / (rad * 1.1)), 1.0);
+
+	rtFragColor.a = 1;
+
+
 
 	// Returns a modified sample of the input texture.
-	rtFragColor = modifySample(inputTexture);
 }

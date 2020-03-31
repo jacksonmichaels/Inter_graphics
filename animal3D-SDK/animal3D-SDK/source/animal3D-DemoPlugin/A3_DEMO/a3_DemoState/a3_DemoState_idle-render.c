@@ -566,6 +566,8 @@ void a3demo_render_main(const a3_DemoState *demoState,
 			a3shaderUniformSendFloat(a3unif_single, currentDemoProgram->uLightSzInvSq, demoState->forwardLightCount, lightSzInvSq);
 			a3shaderUniformSendFloat(a3unif_vec4, currentDemoProgram->uLightPos, demoState->forwardLightCount, lightPos->v);
 			a3shaderUniformSendFloat(a3unif_vec4, currentDemoProgram->uLightCol, demoState->forwardLightCount, lightCol->v);
+
+
 			a3textureActivate(demoState->tex_ramp_dm, a3tex_unit04);
 			a3textureActivate(demoState->tex_ramp_sm, a3tex_unit05);
 
@@ -691,6 +693,17 @@ void a3demo_render_main(const a3_DemoState *demoState,
 			// most basic option: simply display texture
 			currentDemoProgram = displayProgram[demoSubMode][demoState->forwardDisplayMode];
 			a3shaderProgramActivate(currentDemoProgram->program);
+			//;
+			a3real4 outputVect;
+			a3real4Real4x4Product(outputVect, activeCamera->viewProjectionMat.m, demoState->sphereObject->modelMat.v3.v);
+			a3real4DivS(outputVect, outputVect[3]);
+			outputVect[0] = a3serialize(outputVect[0]);
+			outputVect[1] = a3serialize(outputVect[1]);
+
+			a3shaderUniformSendFloat(a3unif_vec2, currentDemoProgram->uCenter, 1, outputVect);
+
+			a3f32 aspectVec = activeCamera->aspect;
+			a3shaderUniformSendFloat(a3unif_single, currentDemoProgram->uDem, 1, &aspectVec);
 		}
 
 		// done

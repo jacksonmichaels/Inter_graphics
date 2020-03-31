@@ -101,6 +101,11 @@ extern "C"
 				a3i32
 					// common general uniform handles
 					uTime;						// time
+
+				a3i32
+					// common general uniform handles
+					uDem,						// screen width and height
+					uCenter;					//uv of blackhole center
 			};
 		};
 

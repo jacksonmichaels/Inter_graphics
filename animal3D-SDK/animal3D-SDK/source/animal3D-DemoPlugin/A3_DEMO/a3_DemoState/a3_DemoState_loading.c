@@ -382,6 +382,10 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 
 		// common general
 		"uTime",
+
+		//midterm specific
+		"uDem",
+		"uCenter"
 	};
 
 	// list of uniform block names: align with uniform block list in demo struct!
@@ -683,6 +687,13 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 		// lighting uniform blocks
 		if ((uLocation = currentDemoProg->ubPointLight) >= 0)
 			a3shaderUniformBlockBind(currentDemoProg->program, uLocation, 0);
+
+		//custom for midterm
+		if ((uLocation = currentDemoProg->uDem) >= 0)
+			a3shaderUniformSendFloat(a3unif_vec4, uLocation, 1, defaultColor);
+		if ((uLocation = currentDemoProg->uCenter) >= 0)
+			a3shaderUniformSendFloat(a3unif_vec4, uLocation, 1, defaultColor);
+
 	}
 
 
