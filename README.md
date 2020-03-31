@@ -2,7 +2,7 @@
 ## Overview
 
 ## Overview Video
-![https://youtu.be/Rzda0JmUzTU](https://youtu.be/Rzda0JmUzTU)
+[https://youtu.be/Rzda0JmUzTU](https://youtu.be/Rzda0JmUzTU)
 
 ## Team members contributions
 ### Jackson
