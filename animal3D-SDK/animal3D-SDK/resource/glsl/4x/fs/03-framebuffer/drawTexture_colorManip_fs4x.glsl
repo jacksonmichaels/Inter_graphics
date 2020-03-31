@@ -31,58 +31,54 @@
 //	4) modify sample in some creative way
 //	5) assign modified sample to output color
 
-uniform vec4 uTex;
 uniform vec2 uCenter;
 uniform float uDem;
-uniform double uTime;
 
 in vec2 vTexcoord;
 uniform sampler2D uSample;
 
 out vec4 rtFragColor;
 
-vec4 modifySample(vec4 inputTexture)
-{
-
-	// We are taking the absolute value of the sin of float time
-	// in order to avoid negative color values. A float conversion
-	// is necessary since uTime starts out as a double, which we
-	// cannot use in a vec4.
-	float absSinFloatTime = abs(sin(float(uTime)));
-
-	// This is the new color filter to use,
-	// which uses a modulating green and inverse modulating red.
-	vec4 modulatingRedAndGreen = vec4(1.0 - absSinFloatTime, absSinFloatTime, 0.0, 1.0);
-
-	// Applies the filter to the sample, returning it.
-	return (inputTexture * modulatingRedAndGreen);
-}
-
 void main()
 {
-
 	// Normalized pixel coordinates (from 0 to 1)
-	vec2 uv = vTexcoord;
+	vec2 UV = vTexcoord;
+
+	// Where the black hole will be positioned in UV coords.
 	vec2 center = uCenter;
-	float rad = 0.1;
-	//float aspect = iResolution.x / iResolution.y;
 
-	vec2 dir = center - uv;
-	dir.x *= uDem;
-	float len = length(dir);
-	vec2 new_dir = normalize(dir) * rad;
-	vec2 new_uv = uv + new_dir * rad / len;
+	// Defines how wide the warping effect will be.
+	float warpRadius = 0.1;
 
+	// Finds the position of the fragment in relation to the black hole.
+	vec2 positionRelativeToBlackHole = center - UV;
+	positionRelativeToBlackHole.x *= uDem;
 
+	// Calculate distance from the center of the black hole.
+	float distanceToCenter = length(positionRelativeToBlackHole);
+	
+	// Calculate the vector pointing towards the black hole with a length of rad.
+	vec2 vectorPointingToCenter = normalize(positionRelativeToBlackHole) * warpRadius * warpRadius;
 
-	rtFragColor = texture2D(uSample, new_uv);
-	float olda = rtFragColor.a;
+	// Create a new UV coordinate system by adding the old UV and the warp offset.
+	vec2 warpedUV = UV + (vectorPointingToCenter / distanceToCenter);
 
-	rtFragColor *= min(mix(-15.0, 1.0, len / (rad * 1.1)), 1.0);
+	// Sampling using our new UV coordinates.
+	rtFragColor = texture2D(uSample, warpedUV);
 
+	// Defining black hole specific warping variables.
+	float blackHoleSharpness = -15.0;
+	float brightness = 1.0;
+	float schwarzschildRadius = 1.1;
+	float brightnessMax = 1.0;
+	float postWarpPosition = distanceToCenter / (warpRadius * schwarzschildRadius);
+
+	// The actual black hole warping effect:
+	// 1. Mixes together the sharpness, brightness, and the fragment's position after warping
+	// 2. Take the minimum of that value and a max brightness value, to prevent the fragments outside
+	//    of the black hole from being too bright.
+	rtFragColor *= min(mix(blackHoleSharpness, brightness, postWarpPosition), brightnessMax);
+
+	// Makes the black hole within the schwarzschild radius appear opaque.
 	rtFragColor.a = 1;
-
-
-
-	// Returns a modified sample of the input texture.
 }
