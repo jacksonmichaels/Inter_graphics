@@ -706,7 +706,7 @@ void a3demo_render_main(const a3_DemoState *demoState,
 			a3shaderUniformSendFloat(a3unif_single, currentDemoProgram->uDem, 1, &aspectVec);
 		}
 
-		// done
+		// donegit a
 		a3shaderUniformSendFloatMat(a3unif_mat4, 0, currentDemoProgram->uMVP, 1, a3mat4_identity.mm);
 		a3shaderUniformSendFloatMat(a3unif_mat4, 0, currentDemoProgram->uAtlas, 1, a3mat4_identity.mm);
 		a3shaderUniformSendDouble(a3unif_single, currentDemoProgram->uTime, 1, &demoState->renderTimer->totalTime);

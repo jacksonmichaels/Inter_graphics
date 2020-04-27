@@ -80,7 +80,10 @@ void main()
 	// 2. Take the minimum of that value and a max brightness value, to prevent the fragments outside
 	//    of the black hole from being too bright.
 	float blackHoleDarkness = min(mix(blackHoleSharpness, brightness, postWarpPosition), brightnessMax);
+	
+	// Makes the black hole within the schwarzschild radius appear opaque.
 	rtFragColor *= blackHoleDarkness;
 	rtFragColor.a += 1 - blackHoleDarkness;
 	// Makes the black hole within the schwarzschild radius appear opaque.
+	rtFragColor.a+= 1 - blackHoleDarkness;
 }
