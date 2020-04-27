@@ -81,6 +81,6 @@ void main()
 	//    of the black hole from being too bright.
 	float blackHoleDarkness = min(mix(blackHoleSharpness, brightness, postWarpPosition), brightnessMax);
 	rtFragColor *= blackHoleDarkness;
-	rtFragColor.a+= 1 - blackHoleDarkness;
+	rtFragColor.a += 1 - blackHoleDarkness;
 	// Makes the black hole within the schwarzschild radius appear opaque.
 }
