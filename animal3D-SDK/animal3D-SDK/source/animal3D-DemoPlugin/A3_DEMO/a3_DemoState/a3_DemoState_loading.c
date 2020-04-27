@@ -383,9 +383,13 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 		// common general
 		"uTime",
 
-		//midterm specific
-		"uDem",
-		"uCenter"
+		//final specific
+		"uBHPos",						// world space coordinates of black hole
+		"uBHRad",						// radius of black hole
+		"uDiskRad",					// radius of disk around black hole			
+		"uV_inv",						// inverse view matrix for camera
+		"uCamPos"					// world space camera position
+
 	};
 
 	// list of uniform block names: align with uniform block list in demo struct!
@@ -690,10 +694,19 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 		if ((uLocation = currentDemoProg->ubPointLight) >= 0)
 			a3shaderUniformBlockBind(currentDemoProg->program, uLocation, 0);
 
-		//custom for midterm
-		if ((uLocation = currentDemoProg->uDem) >= 0)
+
+
+
+		//custom for final
+		if ((uLocation = currentDemoProg->uBHPos) >= 0)
 			a3shaderUniformSendFloat(a3unif_vec4, uLocation, 1, defaultColor);
-		if ((uLocation = currentDemoProg->uCenter) >= 0)
+		if ((uLocation = currentDemoProg->uBHRad) >= 0)
+			a3shaderUniformSendFloat(a3unif_single, uLocation, 1, defaultColor);
+		if ((uLocation = currentDemoProg->uDiskRad) >= 0)
+			a3shaderUniformSendFloat(a3unif_single, uLocation, 1, defaultColor);
+		if ((uLocation = currentDemoProg->uV_inv) >= 0)
+			a3shaderUniformSendFloat(a3unif_mat4, uLocation, 1, defaultColor);
+		if ((uLocation = currentDemoProg->uCamPos) >= 0)
 			a3shaderUniformSendFloat(a3unif_vec4, uLocation, 1, defaultColor);
 
 	}

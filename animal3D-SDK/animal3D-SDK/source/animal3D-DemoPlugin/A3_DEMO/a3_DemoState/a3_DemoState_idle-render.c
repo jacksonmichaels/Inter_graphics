@@ -31,6 +31,8 @@
 //-----------------------------------------------------------------------------
 
 #include "../a3_DemoState.h"
+#include <stdio.h>
+
 
 
 // OpenGL
@@ -694,22 +696,30 @@ void a3demo_render_main(const a3_DemoState *demoState,
 			currentDemoProgram = displayProgram[demoSubMode][demoState->forwardDisplayMode];
 			a3shaderProgramActivate(currentDemoProgram->program);
 			//;
+
 			a3real4 outputVect;
-			a3real4Real4x4Product(outputVect, activeCamera->viewProjectionMat.m, demoState->sphereObject->modelMat.v3.v);
-			a3real4DivS(outputVect, outputVect[3]);
-			outputVect[0] = a3serialize(outputVect[0]);
-			outputVect[1] = a3serialize(outputVect[1]);
+			a3real4Real4x4Product(outputVect, activeCamera->sceneObject->modelMatInv.m, demoState->sphereObject->position.v);
 
-			a3shaderUniformSendFloat(a3unif_vec2, currentDemoProgram->uCenter, 1, outputVect);
+			a3real4x4 inv_vp;
+			a3real4x4GetInverse(inv_vp, activeCamera->viewProjectionMat.m);
 
-			a3f32 aspectVec = activeCamera->aspect;
-			a3shaderUniformSendFloat(a3unif_single, currentDemoProgram->uDem, 1, &aspectVec);
+
+			a3shaderUniformSendFloat(a3unif_vec4, currentDemoProgram->uBHPos, 1, demoState->sphereObject->position.v);
+
+
+
+			a3shaderUniformSendFloat(a3unif_single, currentDemoProgram->uBHRad, 1, &demoState->sphereObject->scale.x);
+			a3shaderUniformSendFloat(a3unif_vec3, currentDemoProgram->uCamPos, 1, activeCamera->sceneObject->position.v);
+			a3shaderUniformSendFloatMat(a3unif_mat4, 0, currentDemoProgram->uV_inv, 1, *inv_vp);
+
+
 		}
 
 		// donegit a
 		a3shaderUniformSendFloatMat(a3unif_mat4, 0, currentDemoProgram->uMVP, 1, a3mat4_identity.mm);
 		a3shaderUniformSendFloatMat(a3unif_mat4, 0, currentDemoProgram->uAtlas, 1, a3mat4_identity.mm);
 		a3shaderUniformSendDouble(a3unif_single, currentDemoProgram->uTime, 1, &demoState->renderTimer->totalTime);
+
 		a3vertexDrawableRenderActive();
 	}
 	

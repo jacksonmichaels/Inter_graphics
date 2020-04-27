@@ -103,9 +103,12 @@ extern "C"
 					uTime;						// time
 
 				a3i32
-					// common general uniform handles
-					uDem,						// screen width and height
-					uCenter;					//uv of blackhole center
+					// final uniforms
+					uBHPos,						// world space coordinates of black hole
+					uBHRad,						// radius of black hole
+					uDiskRad,					// radius of disk around black hole			
+					uV_inv,						// inverse view matrix for camera
+					uCamPos;					// world space camera position
 			};
 		};
 

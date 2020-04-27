@@ -62,8 +62,8 @@ void main()
 	vec4 orbitalPosition = aPosition;
 
 	// Get the new orbital coordinates.
-	orbitalPosition.x = getOrbitCoord(orbitalPosition.x);
-	orbitalPosition.y = getOrbitCoord(orbitalPosition.y);
+	//orbitalPosition.x = getOrbitCoord(orbitalPosition.x);
+	//orbitalPosition.y = getOrbitCoord(orbitalPosition.y);
 
 	// Output the position with the new orbital coordinates.
 	gl_Position = orbitalPosition;
