@@ -33,6 +33,28 @@ uniform double uTime;
 
 out vec2 vTexcoord;
 
+float calculateSchwarzschildRadius(double mass)
+{
+	// The Gravitational physics constant.
+	float G = 0.0000000000667430;
+
+	// The speed of light.
+	float c = 299792458;
+
+	// The equation to calculate the schwarzchild radius.
+	return float((2.0 * G * mass) / pow(c, 2.0));
+}
+
+float getTimeDilationAmount(float changeInTime, double mass, float distanceToBlackHole)
+{
+	// Find the distance relative to the black hole's radius.
+	float distanceVsBlackHoleRadius = (calculateSchwarzschildRadius(mass) / distanceToBlackHole);
+	
+	// Calculate time dilation based on the change in time between two
+	// reference points, and the gravity amount of the gravity well.
+	return changeInTime * sqrt(1.0 - distanceVsBlackHoleRadius);
+}
+
 // A normal position coordinate is passed in,
 // and the position translated to the orbit is passed out.
 float getOrbitCoord(float coord)
@@ -40,8 +62,11 @@ float getOrbitCoord(float coord)
 	// Time converted from a double to a float.
 	float floatTime = float(uTime);
 
+	// A sample mass, in this case the mas of the earth.
+	double earthMass = pow(5.9722, 24);
+
 	// The speed that the orbit travels around the center.
-	float orbitSpeed = 1.0;
+	float orbitSpeed = getTimeDilationAmount(1.0, earthMass, 10000000);
 
 	// The depth that the new orbit will travel to.
 	float orbitalDepth = 10.0;
@@ -61,11 +86,10 @@ void main()
 	// Creating a new position value that we can modify.
 	vec4 orbitalPosition = aPosition;
 
-	// Get the new orbital coordinates.
-	//orbitalPosition.x = getOrbitCoord(orbitalPosition.x);
-	//orbitalPosition.y = getOrbitCoord(orbitalPosition.y);
+	// Get the new orbital coordinates. 
+	orbitalPosition.x = getOrbitCoord(orbitalPosition.x);
+	orbitalPosition.y = getOrbitCoord(orbitalPosition.y);
 
-	// Output the position with the new orbital coordinates.
 	gl_Position = orbitalPosition;
 	vTexcoord = vec2(uAtlas * aTexCoord);
 }
