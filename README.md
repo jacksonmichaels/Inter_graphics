@@ -1,6 +1,6 @@
 # Intermediate Graphics Midterm, Black Hole Simulation
 ## Overview
-For our midterm project, we created a black hole fragment shader and an orbiting vertex shader.
+For our final project, we created a ray tracing black hole fragment shader and an gravitational well vertex shader.
 To access this project, navigate to the "Color manipulation" forward display mode located in the Shading with MRT Sub-mode.
 
 ### Fragment Shader
