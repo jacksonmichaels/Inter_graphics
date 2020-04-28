@@ -66,7 +66,7 @@ float getOrbitCoord(float coord)
 	double earthMass = pow(5.9722, 24);
 
 	// The speed that the orbit travels around the center.
-	float orbitSpeed = getTimeDilationAmount(1.0, earthMass, 10000000);
+	float orbitSpeed = getTimeDilationAmount(1.0, earthMass, 100000);
 
 	// The depth that the new orbit will travel to.
 	float orbitalDepth = 10.0;

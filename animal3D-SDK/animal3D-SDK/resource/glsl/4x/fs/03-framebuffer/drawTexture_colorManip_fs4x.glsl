@@ -36,6 +36,28 @@ uniform sampler2D uTex_sm;
 
 out vec4 rtFragColor;
 
+float calculateSchwarzschildRadius(double mass)
+{
+	// The Gravitational physics constant.
+	float G = 0.0000000000667430;
+
+	// The speed of light.
+	float c = 299792458;
+
+	// The equation to calculate the schwarzchild radius.
+	return float((2.0 * G * mass) / pow(c, 2.0));
+}
+
+float getTimeDilationAmount(float changeInTime, double mass, float distanceToBlackHole)
+{
+	// Find the distance relative to the black hole's radius.
+	float distanceVsBlackHoleRadius = (calculateSchwarzschildRadius(mass) / distanceToBlackHole);
+	
+	// Calculate time dilation based on the change in time between two
+	// reference points, and the gravity amount of the gravity well.
+	return changeInTime * sqrt(1.0 - distanceVsBlackHoleRadius);
+}
+
 void main()
 {
 	//declaring constants and other such fields
@@ -102,7 +124,7 @@ void main()
 				vec2 delta = bh.rg - pos.rg;
 				float deg = atan(delta.x, delta.y) + PI;
 				deg /= 2 * PI;
-				deg = mod(deg + float(uTime) / 5, 1.0);
+				deg = mod(deg + (float(uTime) * getTimeDilationAmount(1.0, pow(5.9722, 24), 10.0)) / 5, 1.0);
 				diskUV = vec2(deg, shade);
 
 				col = vec4( deg, 0, 1 - deg, 1);
