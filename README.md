@@ -24,9 +24,6 @@ and change in time, the time difference between the black hole's and the user's 
 To change between this vertex shader and the default one, 
 simply change passBlackHole_transform_vs under the prog_drawTexture_colorManip program (located in a3_DemoState_loading.c) to passTexcoord_transform_vs.
 
-## Overview Video
-[https://youtu.be/Rzda0JmUzTU](https://youtu.be/Rzda0JmUzTU)
-
 ## Team members contributions
 ### Jackson
 Black Hole fragment shader implementation 
