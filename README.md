@@ -43,7 +43,7 @@ Our project fits into the intermediate real-time effect category. This is becaus
 
 
 ## UML
-![UML Diagram](https://cdn.discordapp.com/attachments/642176677128044548/694399303845675068/unknown.png "UML Diagram")
+![UML Diagram](https://cdn.discordapp.com/attachments/642176677128044548/704699771637465209/unknown.png "UML Diagram")
 ## Important Code
 
 ### Overall
