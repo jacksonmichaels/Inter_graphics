@@ -1,6 +1,6 @@
 # Intermediate Graphics Midterm, Black Hole Simulation
 ## Overview
-For our midterm project, we created a black hole fragment shader and an orbiting vertex shader.
+For our final project, we created a ray tracing black hole fragment shader and an gravitational well vertex shader.
 To access this project, navigate to the "Color manipulation" forward display mode located in the Shading with MRT Sub-mode.
 
 ### Fragment Shader
@@ -36,14 +36,14 @@ Vertex Shader implementation and integration with fragment shader
 Refactored fragment shader for increased readability
 
 ## Description
-This project uses fragment and vertex shaders to simulate the light warping effects observed nearby a black hole. The basic effect is to take the fragments that are close to the center of the black hole and shift them outwards to make the illusion that light from objects behind the Black Hole is being bent around the edges to the observers eye.
+This project uses fragment and vertex shaders to simulate the light warping effects observed nearby a black hole. Basically we send rays out from each fragment simulating them as they travel through the scene, adjusting their direction based on how much force the gravity of the black hole would pull on it at any given position. then if they hit either the black hole itself or its disk we set the color to match what it hit
 
 ## Justification
 Our project fits into the intermediate real-time effect category. This is because it is an intermediate level post-processing effect, which uses techniques that build on principals we have learned to date, such as UV remapping and vector distances.
 
 
 ## UML
-![UML Diagram](https://cdn.discordapp.com/attachments/642176677128044548/694399303845675068/unknown.png "UML Diagram")
+![UML Diagram](https://cdn.discordapp.com/attachments/642176677128044548/704699771637465209/unknown.png "UML Diagram")
 ## Important Code
 
 ### Overall
